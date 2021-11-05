@@ -11,7 +11,10 @@ public class ChangeCursor : MonoBehaviour
     [SerializeField]
     private Texture2D cursorPickUp;
 
- 
+    void Start()
+    {
+        Cursor.SetCursor(cursorDefault, Vector2.zero, CursorMode.ForceSoftware);
+    }
     public void SetCursor(string tag)
     {
         if(tag == "Enemy")
