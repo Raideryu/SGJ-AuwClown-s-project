@@ -7,22 +7,32 @@ using UnityEngine.AI;
 public class BaseCharacter : MonoBehaviour
 {
     [SerializeField]
-    float actionRange = 1f; //минимальное расто€ние до действи€
-
+    float actionRange = 1; //минимальное расто€ние до действи€
+    [SerializeField, Tooltip("врем€  ƒ атаки")]
+    float attackCDTime = 1;
 
     private GameObject _target;
     private NavMeshAgent agent; // компонент, который отвечает за перемещение
+    private CharacterAnimations animations;
+
+    bool isAttack=false;
 
     void Start()
     {
         agent = GetComponent<NavMeshAgent>();
         agent.stoppingDistance = actionRange;
+        animations = GetComponent<CharacterAnimations>();
+
+        if (animations)
+        {
+            animations.OnAttackEnd += AttackEnd;  // событие завершени€ анимации атаки (по сути сам удар)
+        }
     }
 
     private void Update()
     {
         if (!_target) return; // если нет цели или недошел до нее 
-        Debug.Log("текуща€ цель: " + _target.name);
+        Debug.Log(" текуща€ цель: " + _target.name);
         if((_target.transform.position - transform.position).magnitude <= actionRange) // если расто€ние до цели меньше расто€ни€ действи€
         {
             Action();
@@ -64,8 +74,12 @@ public class BaseCharacter : MonoBehaviour
     /// <param name="attackTarget">цель аттаки</param>
     protected virtual void Attack(BaseCharacter attackTarget)
     {
+        if (isAttack) return;
+        isAttack = true;
+
         // вызвать анимацию аттаки
-        Debug.Log("€: "+ gameObject.name +"атакую цель: " + attackTarget.gameObject.name);
+        Debug.Log("€: "+ gameObject.name +" атакую цель: " + attackTarget.gameObject.name);
+        animations.StartAttack();
     }
 
 
@@ -76,8 +90,18 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void PickUpObj(PickUp pickUp)
     {
         // подобрать предмет
-        Debug.Log("€: " + gameObject.name + "подбираю: " + pickUp.gameObject.name);
+        Debug.Log("€: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
 
+    void AttackEnd()
+    {
+        StartCoroutine(AttackCD());
+        Debug.Log("€: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
+    }
 
+    IEnumerator AttackCD()
+    {
+        yield return new WaitForSeconds(attackCDTime);
+        isAttack = false;
+    }
 }
