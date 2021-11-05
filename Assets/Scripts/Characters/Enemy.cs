@@ -84,8 +84,7 @@ public class Enemy : MonoBehaviour
     void Chill()
     {
         // двигаем перса туда
-        character.MoveToWithAction(moveSpots[randomSpot].position, null); 
-
+        character.MoveToWithAction(moveSpots[randomSpot].position, null);
 
         if (waitTime <= 0)
         {
@@ -97,6 +96,7 @@ public class Enemy : MonoBehaviour
             waitTime -= Time.deltaTime;
         }
     }
+   
 
     private void OnMouseEnter()
     {
