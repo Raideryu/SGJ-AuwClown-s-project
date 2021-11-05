@@ -641,7 +641,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2137163689615830085, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: movingRange
-      value: 0.01
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6839467302843784344, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: m_AngularSpeed
