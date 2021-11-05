@@ -6,7 +6,7 @@ using UnityEngine.Events;
 public class CharacterAnimations : MonoBehaviour
 {
     [SerializeField]
-    string attackAnimationName = "CharacterSimpleAttack";
+    string attackAnimationName = "CharacterAttack";
     Animator charAnimator;
     BaseCharacter character;
     Vector3 lastPosition;
