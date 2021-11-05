@@ -34,13 +34,6 @@ public class BaseCharacter : MonoBehaviour
             animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
     }
 
-
-
-    void BeforeUpdate()
-    {
-
-    }
-
     private void FixedUpdate()
     {
         if (!_target) return; // если нет цели или недошел до нее 
@@ -49,7 +42,6 @@ public class BaseCharacter : MonoBehaviour
         if (_target && agent.remainingDistance <= actionRange) // если растояние до цели меньше растояния действия
         {
             Action();
-
         }
     }
 

@@ -64,7 +64,7 @@ public class CharacterAnimations : MonoBehaviour
 
     public void AttackAnimEnd()
     {
-        charAnimator.ResetTrigger("StartAttack");
+        //charAnimator.ResetTrigger("StartAttack");
         if (OnAttackEnd != null)
             OnAttackEnd.Invoke();
     }
