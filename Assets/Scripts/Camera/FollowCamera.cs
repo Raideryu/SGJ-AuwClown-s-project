@@ -15,7 +15,7 @@ public class FollowCamera : MonoBehaviour
     void Start()
     {
         if (!player)
-            player = FindObjectOfType<TPCMausePlayerController>().gameObject;
+            player = FindObjectOfType<PlayerInput>().gameObject;
 
         offsetX = player.transform.position.x - transform.position.x;
         offsetY = player.transform.position.y - transform.position.y;
