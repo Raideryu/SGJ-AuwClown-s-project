@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -134,6 +134,10 @@ PrefabInstance:
       propertyPath: actionRange
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 3401628587017966177, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: movingRange
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 4756711393000582570, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: moveSpots.Array.size
       value: 4
@@ -227,6 +231,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2030397622397622374, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: movingRange
+      value: 0.01
+      objectReference: {fileID: 0}
     - target: {fileID: 6091052450464389653, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
       propertyPath: m_Name
       value: Enemy
@@ -500,7 +508,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1743850494}
   m_Layer: 0
-  m_Name: PatrulPoints
+  m_Name: PatrolPoints
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -630,6 +638,10 @@ PrefabInstance:
     - target: {fileID: 2137163689615830085, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: actionRange
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2137163689615830085, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
+      propertyPath: movingRange
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 6839467302843784344, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: m_AngularSpeed
