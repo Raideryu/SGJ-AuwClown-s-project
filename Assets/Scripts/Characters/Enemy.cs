@@ -26,10 +26,15 @@ public class Enemy : MonoBehaviour
     {
         cursor = FindObjectOfType<ChangeCursor>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        if(moveSpots.Length > 0)
-            randomSpot = Random.Range(0, moveSpots.Length);
-
+        
         character = GetComponent<BaseCharacter>();
+
+        if (moveSpots.Length > 0)
+        {
+            randomSpot = Random.Range(0, moveSpots.Length - 1);
+            character.MoveToWithAction(moveSpots[randomSpot].position, null);
+        }
+           
     }
 
     void Update()

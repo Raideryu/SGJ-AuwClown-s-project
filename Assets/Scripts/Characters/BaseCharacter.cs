@@ -15,12 +15,17 @@ public class BaseCharacter : MonoBehaviour
     public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
 
-    bool isAttack=false;
+    bool isAttack = false;
+
+    void Awake()
+    {
+        agent = GetComponent<NavMeshAgent>();
+    }
 
     void Start()
     {
-        agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = actionRange;
+       // agent = GetComponent<NavMeshAgent>();
+        agent.stoppingDistance = 0;
         animations = GetComponent<CharacterAnimations>();
 
         if (animations)
@@ -87,10 +92,10 @@ public class BaseCharacter : MonoBehaviour
         if (isAttack) return;
 
         Vector3 lookRot = transform.position;
-        lookRot.x -= attackTarget.transform.position.x;
-        lookRot.z -= attackTarget.transform.position.z;
-
-        transform.rotation = Quaternion.LookRotation(lookRot);
+        lookRot.x = attackTarget.transform.position.x;
+        lookRot.z = attackTarget.transform.position.z;
+        transform.LookAt(lookRot);
+        //transform.rotation = Quaternion.LookRotation(lookRot);
         isAttack = true;
 
         // вызвать анимацию аттаки
@@ -105,6 +110,10 @@ public class BaseCharacter : MonoBehaviour
     /// <param name="pickUp">сам предмет</param>
     protected virtual void PickUpObj(PickUp pickUp)
     {
+        Vector3 lookRot = transform.position;
+        lookRot.x = pickUp.transform.position.x;
+        lookRot.z = pickUp.transform.position.z;
+        transform.LookAt(lookRot);
         // подобрать предмет
         Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
