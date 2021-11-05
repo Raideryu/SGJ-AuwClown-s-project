@@ -33,16 +33,17 @@ public class BaseCharacter : MonoBehaviour
             animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
         }
     }
-
-    private void Update()
-    {
         
-    }
-    
     private void FixedUpdate()
     {
         if (!_target) return; // если нет цели или недошел до нее 
         Debug.Log(" текущая цель: " + _target.name);
+
+
+        if(agent.remainingDistance <= agent.stoppingDistance)
+        {
+            // создать евент "дошел до точки назначения"
+        }
 
         if (_target && agent.remainingDistance <= actionRange) // если растояние до цели меньше растояния действия
         {

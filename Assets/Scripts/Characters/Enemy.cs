@@ -121,6 +121,4 @@ public class Enemy : MonoBehaviour
             Debug.LogError("отсутствует на сцене курсор");
         }
     }
-
-    
 }
