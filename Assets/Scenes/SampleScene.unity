@@ -273,9 +273,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b677bad4f05af414f8d04e5b20d4e0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorDefault: {fileID: 2800000, guid: 732a9e6f69eb3e845a44dcd70e570c5c, type: 3}
-  cursorAttack: {fileID: 2800000, guid: 92d7739c9baea7a4996e2ce23a736bdf, type: 3}
-  cursorPickUp: {fileID: 2800000, guid: c8c6a742efa726241b30e3a6cdc547f0, type: 3}
+  cursorDefault: {fileID: 2800000, guid: 4ec3df3ca0153b949bad65b1a681f540, type: 3}
+  cursorAttack: {fileID: 2800000, guid: 8f0179fa2de4c5345a9ea0f2c06357b1, type: 3}
+  cursorPickUp: {fileID: 2800000, guid: f9eecb7c472d5704ca0da388c6326bc9, type: 3}
 --- !u!4 &445351471
 Transform:
   m_ObjectHideFlags: 0

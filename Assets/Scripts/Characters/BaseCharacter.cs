@@ -21,8 +21,8 @@ public class BaseCharacter : MonoBehaviour
 
     private void Update()
     {
-        if (!_target || !agent.isStopped) return; // если нет цели или недошел до нее 
-
+        if (!_target) return; // если нет цели или недошел до нее 
+        Debug.Log("текущая цель: " + _target.name);
         if((_target.transform.position - transform.position).magnitude <= actionRange) // если растояние до цели меньше растояния действия
         {
             Action();
@@ -54,7 +54,7 @@ public class BaseCharacter : MonoBehaviour
         else if (_target.GetComponent<PickUp>())
         {
             PickUp pick = _target.GetComponent<PickUp>();
-
+            PickUpObj(pick);
         }
     }
 
