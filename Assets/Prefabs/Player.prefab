@@ -81,6 +81,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   actionRange: 5
   attackCDTime: 1
+  agent: {fileID: 0}
 --- !u!114 &7509905314570020467
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -91,17 +92,5 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 2de9704612f07b84f9147a09cc3a8d3c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &8641700901198748502
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8583112145952644207}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f62f308ff98617f4991a40329f0ec5b7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

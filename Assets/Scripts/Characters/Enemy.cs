@@ -16,7 +16,7 @@ public class Enemy : MonoBehaviour
 
     public float speed;
     public float distance;
-    public int pos;
+    //public int pos;
     bool angry = false;
     bool patrol = false;
 
@@ -26,7 +26,8 @@ public class Enemy : MonoBehaviour
     {
         cursor = FindObjectOfType<ChangeCursor>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        randomSpot = Random.Range(0, moveSpots.Length);
+        if(moveSpots.Length > 0)
+            randomSpot = Random.Range(0, moveSpots.Length);
 
         character = GetComponent<BaseCharacter>();
     }
@@ -34,7 +35,7 @@ public class Enemy : MonoBehaviour
     void Update()
     {
         
-        if (Vector3.Distance(transform.position,moveSpots[randomSpot].position) > 0.2f)
+        if (moveSpots.Length > 0 && character.agent.remainingDistance > 0.2f) // проверяем растояние до цели
         {
             patrol = true;
             
@@ -51,7 +52,7 @@ public class Enemy : MonoBehaviour
             lookAt.y = transform.position.y;
             transform.LookAt(lookAt);
         }
-        if (Vector3.Distance(transform.position, player.position) > distance)
+        if (character.agent.remainingDistance > distance)
         {
             angry = false;
         }
@@ -69,15 +70,15 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
+        // двигаем перса за плеером
         character.MoveToWithAction(player.position, player.gameObject);
-        // transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        
     }
 
     void Chill()
     {
-        //transform.position = Vector3.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
-
-        character.MoveToWithAction(moveSpots[randomSpot].position, null);
+        // двигаем перса туда
+        character.MoveToWithAction(moveSpots[randomSpot].position, null); 
 
 
         if (waitTime <= 0)

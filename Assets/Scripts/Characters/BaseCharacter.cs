@@ -12,7 +12,7 @@ public class BaseCharacter : MonoBehaviour
     float attackCDTime = 1;
 
     private GameObject _target;
-    private NavMeshAgent agent; // компонент, который отвечает за перемещение
+    public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
 
     bool isAttack=false;
@@ -31,17 +31,27 @@ public class BaseCharacter : MonoBehaviour
 
     private void Update()
     {
+        
+    }
+    
+    private void FixedUpdate()
+    {
         if (!_target) return; // если нет цели или недошел до нее 
         Debug.Log(" текущая цель: " + _target.name);
-        if((_target.transform.position - transform.position).magnitude <= actionRange) // если растояние до цели меньше растояния действия
+
+        if (_target && agent.remainingDistance <= actionRange) // если растояние до цели меньше растояния действия
         {
             Action();
         }
     }
 
-
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
     {
+        if (target == this.gameObject) return;// проверка сам на себя
+
+        agent.stoppingDistance = target != null ? actionRange : 0;
+        
+
         Move(targetPos);
         _target = target;
     }

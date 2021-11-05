@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657898, g: 0.4964133, b: 0.5748178, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -174,6 +174,10 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 4c4fcf7383521134093de530204a397e, type: 2}
+    - target: {fileID: 6091052450464389659, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: m_Speed
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6091052450464389663, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
       propertyPath: m_RootOrder
       value: 1
@@ -309,9 +313,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b677bad4f05af414f8d04e5b20d4e0e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cursorDefault: {fileID: 2800000, guid: 4ec3df3ca0153b949bad65b1a681f540, type: 3}
-  cursorAttack: {fileID: 2800000, guid: 8f0179fa2de4c5345a9ea0f2c06357b1, type: 3}
-  cursorPickUp: {fileID: 2800000, guid: f9eecb7c472d5704ca0da388c6326bc9, type: 3}
+  cursorDefault: {fileID: 2800000, guid: 3b7a69d6d86c682439f363b1929efb91, type: 3}
+  cursorAttack: {fileID: 2800000, guid: 1011062ef22b8124ebf07b98bcb7890f, type: 3}
+  cursorPickUp: {fileID: 2800000, guid: 3a30eaf92dd429d499aeea4a49c01d70, type: 3}
 --- !u!4 &445351471
 Transform:
   m_ObjectHideFlags: 0
@@ -605,7 +609,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b8f1c78b9a3d09743994c400b2e77ec5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cameraSpeed: 1
+  cameraSpeed: 3
   player: {fileID: 0}
 --- !u!1 &1081686972
 GameObject:
@@ -752,6 +756,26 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1363961994245316286, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: moveSpots.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 1363961994245316286, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: moveSpots.Array.data[0]
+      value: 
+      objectReference: {fileID: 931585178}
+    - target: {fileID: 1363961994245316286, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: moveSpots.Array.data[1]
+      value: 
+      objectReference: {fileID: 637530116}
+    - target: {fileID: 1363961994245316286, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: moveSpots.Array.data[2]
+      value: 
+      objectReference: {fileID: 1081686973}
+    - target: {fileID: 1363961994245316286, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
+      propertyPath: moveSpots.Array.data[3]
+      value: 
+      objectReference: {fileID: 825737544}
     - target: {fileID: 6091052450464389653, guid: 31c0bb8f88eeba7469a30af8271f6246, type: 3}
       propertyPath: m_Name
       value: Enemy (1)
@@ -927,7 +951,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8583112145952644197, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 5.32
       objectReference: {fileID: 0}
     - target: {fileID: 8583112145952644197, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -935,7 +959,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8583112145952644197, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -2.29
       objectReference: {fileID: 0}
     - target: {fileID: 8583112145952644197, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
       propertyPath: m_LocalRotation.w
