@@ -75,6 +75,12 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void Attack(BaseCharacter attackTarget)
     {
         if (isAttack) return;
+
+        Vector3 lookRot = transform.position;
+        lookRot.x -= attackTarget.transform.position.x;
+        lookRot.z -= attackTarget.transform.position.z;
+
+        transform.rotation = Quaternion.LookRotation(lookRot);
         isAttack = true;
 
         // вызвать анимацию аттаки

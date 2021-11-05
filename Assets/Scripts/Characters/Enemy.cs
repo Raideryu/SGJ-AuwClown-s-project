@@ -19,12 +19,16 @@ public class Enemy : MonoBehaviour
     public int pos;
     bool angry = false;
     bool patrol = false;
-    
+
+    private BaseCharacter character;
+
     void Start()
     {
         cursor = FindObjectOfType<ChangeCursor>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
         randomSpot = Random.Range(0, moveSpots.Length);
+
+        character = GetComponent<BaseCharacter>();
     }
 
     void Update()
@@ -65,12 +69,16 @@ public class Enemy : MonoBehaviour
 
     void Attack()
     {
-        transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
+        character.MoveToWithAction(player.position, player.gameObject);
+        // transform.position = Vector3.MoveTowards(transform.position, player.position, speed * Time.deltaTime);
     }
 
     void Chill()
     {
-        transform.position = Vector3.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
+        //transform.position = Vector3.MoveTowards(transform.position, moveSpots[randomSpot].position, speed * Time.deltaTime);
+
+        character.MoveToWithAction(moveSpots[randomSpot].position, null);
+
 
         if (waitTime <= 0)
         {
