@@ -8,6 +8,7 @@ public class PlayerInput : MonoBehaviour
 {
     private Camera mainCamera;
     private BaseCharacter character;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -23,9 +24,11 @@ public class PlayerInput : MonoBehaviour
             RaycastHit hit;
             if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                // добавить возможность атаки и подбора предметов
-                character.Move(hit.point);
+                // второй параметр отвечает за текущее действие
+                character.MoveToWithAction(hit.point, hit.collider.gameObject);
+               
             }
         }
     }
 }
+
