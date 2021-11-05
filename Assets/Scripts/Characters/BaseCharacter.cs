@@ -7,57 +7,57 @@ using UnityEngine.AI;
 public class BaseCharacter : MonoBehaviour
 {
     [SerializeField]
-    float actionRange = 1; //минимальное растояние до действия
+    float actionRange = 1, movingRange = 0.1f; //минимальное растояние до действия
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
 
     private GameObject _target;
+    [HideInInspector]
     public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
 
     bool isAttack = false;
-
+   
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
+        animations = GetComponent<CharacterAnimations>();
+        
+
     }
 
     void Start()
     {
-       // agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 0.1f;
-        animations = GetComponent<CharacterAnimations>();
-
-        if (animations)
-        {
-            animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
-        }
-    }
+        agent.stoppingDistance = movingRange;
         
+        if (animations)
+            animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
+    }
+
+
+
+    void BeforeUpdate()
+    {
+
+    }
+
     private void FixedUpdate()
     {
         if (!_target) return; // если нет цели или недошел до нее 
-        Debug.Log(" текущая цель: " + _target.name);
-
-
-        if(agent.remainingDistance <= agent.stoppingDistance)
-        {
-            // создать евент "дошел до точки назначения"
-        }
+        
 
         if (_target && agent.remainingDistance <= actionRange) // если растояние до цели меньше растояния действия
         {
             Action();
+
         }
     }
 
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
     {
-        if (target == this.gameObject) return;// проверка сам на себя
+        if (target == this.gameObject) return; // проверка сам на себя
 
-        agent.stoppingDistance = target != null ? actionRange : 0.1f;
-
-
+        agent.stoppingDistance = target != null ? actionRange : movingRange; // если есть цель для атаки, то разное растояние
 
         Move(targetPos);
         _target = target;
@@ -97,11 +97,10 @@ public class BaseCharacter : MonoBehaviour
         lookRot.x = attackTarget.transform.position.x;
         lookRot.z = attackTarget.transform.position.z;
         transform.LookAt(lookRot);
-        //transform.rotation = Quaternion.LookRotation(lookRot);
+       
         isAttack = true;
 
         // вызвать анимацию аттаки
-        Debug.Log("я: "+ gameObject.name +" атакую цель: " + attackTarget.gameObject.name);
         animations.StartAttack();
     }
 
@@ -116,6 +115,7 @@ public class BaseCharacter : MonoBehaviour
         lookRot.x = pickUp.transform.position.x;
         lookRot.z = pickUp.transform.position.z;
         transform.LookAt(lookRot);
+       
         // подобрать предмет
         Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }

@@ -6,71 +6,63 @@ using UnityEngine.AI;
 public class Enemy : MonoBehaviour
 {
     [SerializeField]
-    private float distanceAgr = 7;
+    private float agrDistance = 7;
     [SerializeField]
-    private float startWaitTime = 1;
+    private float waitTime = 1;
     [SerializeField]
     public Transform[] moveSpots;
 
     private Transform player;
 
-    private int randomSpot;
+    private int currentSpot = 0;
 
-    private float waitTime;
+    EnemyState currentState = EnemyState.Patrol;
 
-    bool angry = false;
-    bool patrol = false;
-
-    private ChangeCursor cursor;
     private BaseCharacter character;
+
+    void Awake()
+    {
+        character = GetComponent<BaseCharacter>();
+    }
 
     void Start()
     {
-        cursor = FindObjectOfType<ChangeCursor>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-        
-        character = GetComponent<BaseCharacter>();
+        if (!player) Debug.LogError("отсутствует сущность с тегом Player");
 
         if (moveSpots.Length > 0)
         {
-            randomSpot = Random.Range(0, moveSpots.Length - 1);
-            character.MoveToWithAction(moveSpots[randomSpot].position, null);
+            currentSpot = Random.Range(0, moveSpots.Length - 1);
         }
-           
+        else // если масив точек патрулирования пустой, то заполняем ео текущей позицией
+        {
+            moveSpots = new Transform[1] { transform };
+        }
+        StartPatrol();
+
     }
 
-    void Update()
+    void FixedUpdate()
     {
-        if (moveSpots.Length > 0 && character.agent.remainingDistance > 0.2f) // проверяем растояние до цели
+        if (Vector3.Distance(transform.position, player.position) < agrDistance)
         {
-            patrol = true;
-            
-            Vector3 look = moveSpots[randomSpot].position;
-            look.y = transform.position.y;
-            transform.LookAt(look);
+            currentState = EnemyState.Angry;
+            StopAllCoroutines();
+        }
+        else if(currentState == EnemyState.Angry)
+        {
+            StartPatrol();
+        }
+       
+        if (moveSpots.Length > 0 && character.agent.remainingDistance < character.agent.stoppingDistance && currentState == EnemyState.Patrol)  // проверяем растояние до точки патрулирования
+        {
+            StartCoroutine(WaitTimer());
         }
 
-        if (Vector3.Distance(transform.position, player.position) < distanceAgr)
-        {
-            angry = true;
-            patrol = false;
-            Vector3 lookAt = player.position;
-            lookAt.y = transform.position.y;
-            transform.LookAt(lookAt);
-        }
-        if (character.agent.remainingDistance > distanceAgr)
-        {
-            angry = false;
-        }
 
-        if (angry == true)
+        if (currentState == EnemyState.Angry)
         {
             Attack();
-        }
-
-        if (patrol == true)
-        {
-            Chill();
         }
     }
 
@@ -78,47 +70,31 @@ public class Enemy : MonoBehaviour
     {
         // двигаем перса за плеером
         character.MoveToWithAction(player.position, player.gameObject);
-        
+
     }
 
-    void Chill()
+    void StartPatrol()
     {
-        // двигаем перса туда
-        character.MoveToWithAction(moveSpots[randomSpot].position, null); 
-
-
-        if (waitTime <= 0)
-        {
-            randomSpot = Random.Range(0, moveSpots.Length);
-            waitTime = startWaitTime;
-        }
-        else
-        {
-            waitTime -= Time.deltaTime;
-        }
+        currentState = EnemyState.Patrol;
+        currentSpot = currentSpot + 1 >= moveSpots.Length ? 0 : currentSpot + 1;
+        character.MoveToWithAction(moveSpots[currentSpot].position, null);
     }
 
-    private void OnMouseEnter()
+    IEnumerator WaitTimer()
     {
-        if (cursor)
-        {
-            cursor.SetCursor(tag);
-        }
-        else
-        {
-            Debug.LogError("отсутствует на сцене курсор");
-        }
+        yield return new WaitForSeconds(waitTime);
+
+        StartPatrol();
     }
 
-    private void OnMouseExit()
+    private void OnDrawGizmos()
     {
-        if (cursor)
-        {
-            cursor.ResetCursor();
-        }
-        else
-        {
-            Debug.LogError("отсутствует на сцене курсор");
-        }
+        Gizmos.color = Color.blue;
+        Gizmos.DrawWireSphere(transform.position, agrDistance);
+    }
+
+    enum EnemyState
+    {
+        Waiting, Patrol, Angry
     }
 }

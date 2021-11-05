@@ -78,3 +78,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 611fcb33f5f110f4e896dfca32cffef5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  distanceAgr: 7
+  startWaitTime: 1
+  moveSpots: []
+--- !u!114 &6827622080621262657
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6091052450464389653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86eb7be0eec85c94bb56f3c4adbbc25c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifireType: 1
