@@ -5,21 +5,23 @@ using UnityEngine.AI;
 
 public class Enemy : MonoBehaviour
 {
-    ChangeCursor cursor;
-
-    public Transform player;
+    [SerializeField]
+    private float distanceAgr = 7;
+    [SerializeField]
+    private float startWaitTime = 1;
+    [SerializeField]
     public Transform[] moveSpots;
+
+    private Transform player;
+
     private int randomSpot;
 
     private float waitTime;
-    public float startWaitTime;
 
-    public float speed;
-    public float distance;
-    //public int pos;
     bool angry = false;
     bool patrol = false;
 
+    private ChangeCursor cursor;
     private BaseCharacter character;
 
     void Start()
@@ -39,7 +41,6 @@ public class Enemy : MonoBehaviour
 
     void Update()
     {
-        
         if (moveSpots.Length > 0 && character.agent.remainingDistance > 0.2f) // проверяем растояние до цели
         {
             patrol = true;
@@ -49,7 +50,7 @@ public class Enemy : MonoBehaviour
             transform.LookAt(look);
         }
 
-        if (Vector3.Distance(transform.position, player.position) < distance)
+        if (Vector3.Distance(transform.position, player.position) < distanceAgr)
         {
             angry = true;
             patrol = false;
@@ -57,7 +58,7 @@ public class Enemy : MonoBehaviour
             lookAt.y = transform.position.y;
             transform.LookAt(lookAt);
         }
-        if (character.agent.remainingDistance > distance)
+        if (character.agent.remainingDistance > distanceAgr)
         {
             angry = false;
         }

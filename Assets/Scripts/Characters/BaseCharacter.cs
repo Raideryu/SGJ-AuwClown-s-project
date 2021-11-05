@@ -25,7 +25,7 @@ public class BaseCharacter : MonoBehaviour
     void Start()
     {
        // agent = GetComponent<NavMeshAgent>();
-        agent.stoppingDistance = 0;
+        agent.stoppingDistance = 0.1f;
         animations = GetComponent<CharacterAnimations>();
 
         if (animations)
@@ -54,8 +54,9 @@ public class BaseCharacter : MonoBehaviour
     {
         if (target == this.gameObject) return;// проверка сам на себя
 
-        agent.stoppingDistance = target != null ? actionRange : 0;
-        
+        agent.stoppingDistance = target != null ? actionRange : 0.1f;
+
+
 
         Move(targetPos);
         _target = target;
