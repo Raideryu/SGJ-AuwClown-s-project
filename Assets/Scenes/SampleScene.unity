@@ -664,7 +664,7 @@ GameObject:
   - component: {fileID: 2039209651}
   m_Layer: 0
   m_Name: Ground
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 4294967295
@@ -753,6 +753,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4591418766346427932, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
+      propertyPath: actionRange
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8583112145952644193, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 2000
+      objectReference: {fileID: 0}
     - target: {fileID: 8583112145952644195, guid: 29139b7a9f6f3134ba25d7c04342f7a0, type: 3}
       propertyPath: m_Enabled
       value: 1
