@@ -10,6 +10,7 @@ public class CharacterAnimations : MonoBehaviour
     Animator charAnimator;
     BaseCharacter character;
     Vector3 lastPosition;
+    bool isAttack = false;
     public float Speed
     { get { return Vector3.Distance(lastPosition, transform.position) / Time.fixedDeltaTime; } }
     // Start is called before the first frame update
@@ -18,25 +19,25 @@ public class CharacterAnimations : MonoBehaviour
         lastPosition = transform.position;
         charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
-        CreateAttackAnimEndEvent();
+        //CreateAttackAnimEndEvent();
     }
 
     void FixedUpdate()
     {
-      
+
         //Debug.Log("текущая скорость у: " + gameObject.name + " состовляет: " + Speed);
-        float speedPU = Mathf.Clamp(Speed/character.agent.speed,0,1);
+        float speedPU = Mathf.Clamp(Speed / character.agent.speed, 0, 1);
         charAnimator.SetFloat("Speed", speedPU);
         lastPosition = transform.position;
     }
 
     //создает событие конца анимации в конце анимации, с названием attackAnimationName и привязывается к AttackAnimEnd()
-    private void CreateAttackAnimEndEvent()
-    {
-        AnimationEvent endAttackAnim = new AnimationEvent();
-        AnimationClip[] clips = charAnimator.runtimeAnimatorController.animationClips;
+    //private void CreateAttackAnimEndEvent()
+    //{
+    //    AnimationEvent endAttackAnim = new AnimationEvent();
+    //    AnimationClip[] clips = charAnimator.runtimeAnimatorController.animationClips;
 
-    }
+    //}
 
     float AttackAnimTime(string name)
     {
@@ -45,7 +46,7 @@ public class CharacterAnimations : MonoBehaviour
 
         for (int i = 0; i < clips.Length; i++)
         {
-         
+
             if (clips[i].name == name)
             {
                 time = clips[i].length;
@@ -54,7 +55,7 @@ public class CharacterAnimations : MonoBehaviour
         }
         return time;
     }
-    
+
 
     public void StartAttack()
     {
@@ -62,14 +63,17 @@ public class CharacterAnimations : MonoBehaviour
         attackAnimTime = AttackAnimTime(animName);
 
         charAnimator.SetTrigger("StartAttack");
-
+        isAttack = true;
         StartCoroutine(WaitAttackAnimation());
     }
 
     public void ResetAnim()
     {
         charAnimator.SetTrigger("ResetAnim");
+
         StopAllCoroutines();
+        if (isAttack)
+            AttackAnimEnd();
     }
 
     public void AttackAnimEnd()
@@ -77,6 +81,7 @@ public class CharacterAnimations : MonoBehaviour
         //charAnimator.ResetTrigger("StartAttack");
         if (OnAttackEnd != null)
             OnAttackEnd.Invoke();
+        isAttack = false;
     }
 
     public void PickUpAnim()
