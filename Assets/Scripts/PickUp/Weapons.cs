@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Weapons : PickableSub
 {
-    public int damage1 = 10;
+    public int damage1 = 3;
 }
 
 
