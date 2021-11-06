@@ -21,13 +21,24 @@ public class PlayerInput : MonoBehaviour
     {
         if (Input.GetMouseButton(0))
         {
-            RaycastHit hit;
-            if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            RaycastHit[] hits = Physics.RaycastAll(mainCamera.ScreenPointToRay(Input.mousePosition));
+
+            foreach (RaycastHit hit in hits)
             {
-                // второй параметр отвечает за текущее действие
-                character.MoveToWithAction(hit.point, hit.collider.gameObject);
-               
+                if(hit.collider.tag == "Ground")
+                {
+                    character.MoveToWithAction(hit.point, hit.collider.gameObject);
+                    break;
+                }                
             }
+
+            // RaycastHit hit;
+            //if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
+            //{
+            //    // второй параметр отвечает за текущее действие
+            //    character.MoveToWithAction(hit.point, hit.collider.gameObject);
+
+            //}
         }
     }
 }
