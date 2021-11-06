@@ -17,9 +17,9 @@ public class BaseCharacter : MonoBehaviour
     private CharacterAnimations animations;
     private CharacterInventar inventar;
     bool isAttack = false;
-
+    public bool isDied=false;
     bool taskEnd;
-
+    DamageDiller dd;
     PickableSub curentPicableTarget;
 
     void Awake()
@@ -28,6 +28,7 @@ public class BaseCharacter : MonoBehaviour
         animations = GetComponent<CharacterAnimations>();
         inventar = GetComponent<CharacterInventar>();
 
+        dd = GetComponent<DamageDiller>();
     }
 
     void Start()
@@ -44,7 +45,7 @@ public class BaseCharacter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_target) return; // если нет цели или недошел до нее 
+        if (!_target || isDied) return; // если нет цели или недошел до нее 
 
 
         if (_target && agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
@@ -55,8 +56,8 @@ public class BaseCharacter : MonoBehaviour
     }
 
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
-    {
-        if (target == this.gameObject) return; // проверка сам на себя
+    { 
+        if (target == this.gameObject || isDied) return; // проверка сам на себя
 
         if (target && target.gameObject.GetComponent<BaseCharacter>())
             agent.stoppingDistance = actionRange;

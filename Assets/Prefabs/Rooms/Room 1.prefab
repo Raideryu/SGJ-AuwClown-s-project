@@ -9,6 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2806313268060321885}
+  - component: {fileID: 7955127089426028574}
   m_Layer: 0
   m_Name: End
   m_TagString: Untagged
@@ -30,6 +31,19 @@ Transform:
   m_Father: {fileID: 2566956574627620294}
   m_RootOrder: 80
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7955127089426028574
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4019377191932066375}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3.45, y: 7.09, z: 5.57}
+  m_Center: {x: 4.44, y: 0, z: 0}
 --- !u!1 &7114087987907723088
 GameObject:
   m_ObjectHideFlags: 0
@@ -54,7 +68,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7114087987907723088}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 43.629, y: 0.35771942, z: -30.601}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 8941577824970616304}
@@ -217,9 +231,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Enter: {fileID: 8941577824970616304}
+  EnterRoom: {fileID: 0}
   Exits:
   - {fileID: 2806313268060321885}
-  - {fileID: 0}
 --- !u!1001 &21586917001106893
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -22,20 +22,22 @@ public class FollowCamera : MonoBehaviour
         offsetZ = player.transform.position.z - transform.position.z;
     }
 
-    
-
-    private void FixedUpdate()
+    private void Update()
     {
         float nextPosX = player.transform.position.x;
         float nextPosY = player.transform.position.y;
         float nextPosZ = player.transform.position.z;
-        float xPos = Mathf.Lerp(transform.position.x, nextPosX - offsetX, cameraSpeed * Time.fixedDeltaTime);
-        float yPos = Mathf.Lerp(transform.position.y, nextPosY - offsetY, cameraSpeed * Time.fixedDeltaTime);
-        float zPos = Mathf.Lerp(transform.position.z, nextPosZ - offsetZ, cameraSpeed * Time.fixedDeltaTime);
+        float xPos = Mathf.Lerp(transform.position.x, nextPosX - offsetX, cameraSpeed * Time.deltaTime);
+        float yPos = Mathf.Lerp(transform.position.y, nextPosY - offsetY, cameraSpeed * Time.deltaTime);
+        float zPos = Mathf.Lerp(transform.position.z, nextPosZ - offsetZ, cameraSpeed * Time.deltaTime);
 
+        //Vector3 newV
 
         Vector3 nextCameraPos = new Vector3(xPos - transform.position.x, yPos - transform.position.y, zPos - transform.position.z);
-        
+
         transform.Translate(nextCameraPos, Space.World);
+
+
     }
+
 }

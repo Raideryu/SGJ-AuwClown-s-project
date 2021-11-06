@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Weapons : PickableSub
-{
-
+{    
+    //добавить урон
 }
 
 

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
-    private int healthPlayer =1;
-    private int HealthPlayer  
+    private int healthPlayer =10;
+     int HealthPlayer  
     {
         get => healthPlayer; 
         set 
@@ -48,7 +48,7 @@ public class PlayerStats : MonoBehaviour
         character = GetComponent<BaseCharacter>();
     }
 
-    void GetDamage(int damage)
+   public void GetDamage(int damage)
     {
         HealthPlayer -= damage;
         HealthBar.fillAmount = HealthPlayer * 0.1f;

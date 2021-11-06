@@ -16,7 +16,7 @@ public class CharacterAnimations : MonoBehaviour
     bool isAttack = false;
     public float Speed
     { get { return Vector3.Distance(lastPosition, transform.position) / Time.fixedDeltaTime; } }
-    // Start is called before the first frame update
+    
     void Start()
     {
         lastPosition = transform.position;
@@ -58,7 +58,6 @@ public class CharacterAnimations : MonoBehaviour
             
             if (clips[i].name == name)
             {
-              
                 time = clips[i].length;
                 break;
             }
@@ -107,7 +106,7 @@ public class CharacterAnimations : MonoBehaviour
     public void PickUpAnimEnd()
     {
         charAnimator.ResetTrigger("PickUp");
-        //charAnimator.ResetTrigger("StartAttack");
+        
         if (OnPickUpEnd != null)
             OnPickUpEnd.Invoke();
     }

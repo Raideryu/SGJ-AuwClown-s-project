@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 5299840154661550042}
   - component: {fileID: 6871757586329204320}
   - component: {fileID: 843922816797315836}
+  - component: {fileID: -5928519686223346967}
+  - component: {fileID: 2254076609391253960}
   m_Layer: 0
   m_Name: MeshCharacter
   m_TagString: Untagged
@@ -118,6 +120,7 @@ MonoBehaviour:
   movingRange: 0.1
   attackCDTime: 1
   agent: {fileID: 0}
+  isDied: 0
 --- !u!114 &6871757586329204320
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -131,6 +134,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAnimationName: CharacterAttack
+  pickingUpAnimationName: PickingUp
 --- !u!114 &843922816797315836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,6 +153,39 @@ MonoBehaviour:
   currentWeapon: {fileID: 0}
   currentSecondWeapon: {fileID: 0}
   currentScroll: {fileID: 0}
+--- !u!114 &-5928519686223346967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220697836958533791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 521586e616c4d5745bd8d0281105ba4f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &2254076609391253960
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220697836958533791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 116afecf74492144ba06af8ed73ca7fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  healthPlayer: 10
+  MaxHealthPlayer: 2
+  PowerPlayer: 1
+  MaxPowerPlayer: 2
+  AgilityPlayer: 1
+  MaxAgilityPlayer: 2
+  IntellectPlayer: 1
+  MaxIntellectPlayer: 2
+  HealthBar: {fileID: 0}
 --- !u!1 &5514047503489962758
 GameObject:
   m_ObjectHideFlags: 0
