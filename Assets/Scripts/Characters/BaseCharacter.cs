@@ -20,6 +20,8 @@ public class BaseCharacter : MonoBehaviour
 
     bool taskEnd;
 
+    PickableSub curentPicableTarget;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -31,30 +33,35 @@ public class BaseCharacter : MonoBehaviour
     void Start()
     {
         agent.stoppingDistance = movingRange;
-        
+
         if (animations)
+        {
             animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
+            animations.OnPickUpEnd += PickUpEnd;
+        }
+
     }
 
     private void FixedUpdate()
     {
         if (!_target) return; // если нет цели или недошел до нее 
-        
 
-        if (_target && agent.remainingDistance <= agent.stoppingDistance) // если растояние до цели меньше растояния действия
+
+        if (_target && agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
         {
             Action();
+            
         }
     }
 
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
     {
         if (target == this.gameObject) return; // проверка сам на себя
-        
+
         if (target && target.gameObject.GetComponent<BaseCharacter>())
             agent.stoppingDistance = actionRange;
         else agent.stoppingDistance = movingRange;
-        
+
         taskEnd = false;
 
         if (_target != target)
@@ -62,8 +69,9 @@ public class BaseCharacter : MonoBehaviour
 
         Move(targetPos);
         _target = target;
+        actionstarted = true;
     }
-
+    bool actionstarted = false;
 
     void Move(Vector3 target)
     {
@@ -77,12 +85,21 @@ public class BaseCharacter : MonoBehaviour
         if (_target.GetComponent<BaseCharacter>())
         {
             BaseCharacter enemy = _target.GetComponent<BaseCharacter>();
+
+            Vector3 lookRot = transform.position;
+            lookRot.x = enemy.transform.position.x;
+            lookRot.z = enemy.transform.position.z;
+            transform.LookAt(lookRot);
+
+
             Attack(enemy);
         }
-        else if (_target.GetComponent<PickableSub>() && !taskEnd)
+        else if (_target.GetComponent<PickableSub>() && !taskEnd && actionstarted)
         {
             PickableSub pick = _target.GetComponent<PickableSub>();
-            PickUpObj(pick);
+            if (pick != curentPicableTarget)
+            StartPickUpObj(pick);
+            actionstarted = false; 
         }
     }
 
@@ -94,12 +111,7 @@ public class BaseCharacter : MonoBehaviour
     {
         if (isAttack) return;
 
-        Vector3 lookRot = transform.position;
-        lookRot.x = attackTarget.transform.position.x;
-        lookRot.z = attackTarget.transform.position.z;
-        transform.LookAt(lookRot);
 
-        isAttack = true;
 
         // вызвать анимацию аттаки
         animations.StartAttack();
@@ -110,30 +122,48 @@ public class BaseCharacter : MonoBehaviour
     /// метод подбирания предмета 
     /// </summary>
     /// <param name="pickUp">сам предмет</param>
-    protected virtual void PickUpObj(PickableSub pickUp)
+    protected virtual void StartPickUpObj(PickableSub pickUp)
     {
-       
+
         //Vector3 lookRot = transform.position;
         //lookRot.x = pickUp.transform.position.x;
         //lookRot.z = pickUp.transform.position.z;
         //transform.LookAt(lookRot);
         taskEnd = true;
-        animations.PickUpAnim();
-        inventar.PickUpSub(pickUp);
+        animations.StartPickUpAnim();
+        curentPicableTarget = pickUp;
 
         // подобрать предмет
-       // Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
+        // Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
 
+    void PickUpEnd()
+    {
+        if (curentPicableTarget)
+            inventar.PickUpSub(curentPicableTarget);
+        curentPicableTarget = null;
+    }
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
-      //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
+        //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
     }
 
     IEnumerator AttackCD()
     {
         yield return new WaitForSeconds(attackCDTime);
         isAttack = false;
+    }
+
+    //смерть
+    public void Die()
+    {
+        animations.DieAnim();
+    }
+
+    //воскрешение
+    public void SunDay()
+    {
+        animations.SundayAnim();
     }
 }

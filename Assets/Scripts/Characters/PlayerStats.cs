@@ -6,24 +6,48 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
-    private int HealthPlayer;
+    private int healthPlayer =1;
+    private int HealthPlayer  
+    {
+        get => healthPlayer; 
+        set 
+        {
+            if (value <= 0)
+            {
+                healthPlayer = 0;
+                Die();
+            }
+            else
+            { 
+                healthPlayer = value;
+                // тут обновить HUD
+            }
+        }
+    }
     [SerializeField]
-    private int MaxHealthPlayer;
+    private int MaxHealthPlayer =2;
     [SerializeField]
-    private int PowerPlayer;
+    private int PowerPlayer = 1;
     [SerializeField]
-    private int MaxPowerPlayer;
+    private int MaxPowerPlayer = 2;
     [SerializeField]
-    private int AgilityPlayer;
+    private int AgilityPlayer = 1;
     [SerializeField]
-    private int MaxAgilityPlayer;
+    private int MaxAgilityPlayer = 2;
     [SerializeField]
-    private int IntellectPlayer;
+    private int IntellectPlayer = 1;
     [SerializeField]
-    private int MaxIntellectPlayer;
+    private int MaxIntellectPlayer = 2;
 
     public Image HealthBar;
-   
+
+    private BaseCharacter character;
+
+    private void Start()
+    {
+        character = GetComponent<BaseCharacter>();
+    }
+
     void GetDamage(int damage)
     {
         HealthPlayer -= damage;
@@ -46,5 +70,6 @@ public class PlayerStats : MonoBehaviour
     }
     void Die()
     {
+        character.Die();
     }
 }
