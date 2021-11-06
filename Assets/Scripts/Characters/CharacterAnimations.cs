@@ -16,7 +16,7 @@ public class CharacterAnimations : MonoBehaviour
     void Start()
     {
         lastPosition = transform.position;
-        charAnimator = GetComponent<Animator>();
+        charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
         CreateAttackAnimEndEvent();
     }
