@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerStats : MonoBehaviour
 {
     [SerializeField]
-    private int healthPlayer =100;
+    private int healthPlayer =10;
      int HealthPlayer  
     {
         get => healthPlayer; 
@@ -27,7 +27,23 @@ public class PlayerStats : MonoBehaviour
     [SerializeField]
     private int MaxHealthPlayer =2;
     [SerializeField]
-    public int PowerPlayer = 1;
+    public int powerPlayer = 1;
+    
+    int PowerPlayer
+    {
+        get => powerPlayer;
+        set
+        {
+            if (value <= 0)
+            {
+                powerPlayer = 0;
+            }
+            else
+            {
+                powerPlayer = value;
+            }
+        }
+    }
     [SerializeField]
     private int MaxPowerPlayer = 2;
     [SerializeField]
