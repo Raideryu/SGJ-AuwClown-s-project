@@ -34,33 +34,42 @@ public class CharacterAnimations : MonoBehaviour
     private void CreateAttackAnimEndEvent()
     {
         AnimationEvent endAttackAnim = new AnimationEvent();
-        AnimationClip clip;
+        AnimationClip[] clips = charAnimator.runtimeAnimatorController.animationClips;
+
+    }
+
+    float AttackAnimTime(string name)
+    {
+        float time = 1;
         AnimationClip[] clips = charAnimator.runtimeAnimatorController.animationClips;
 
         for (int i = 0; i < clips.Length; i++)
         {
-
-            if (clips[i].name.Contains(attackAnimationName))
+         
+            if (clips[i].name == name)
             {
-                clip = clips[i];
-                endAttackAnim.time = clip.length;
-                endAttackAnim.functionName = "AttackAnimEnd";
-                Debug.Log("добавлено событие анимации к: " + gameObject.name);
+                time = clips[i].length;
                 break;
             }
-            else
-            {
-                Debug.LogWarning("отсутствует анимация атаки у объекта: " + gameObject.name);
-            }
         }
+        return time;
     }
-
     
 
     public void StartAttack()
     {
+        string animName = "CharacterAttack";
+        attackAnimTime = AttackAnimTime(animName);
+
         charAnimator.SetTrigger("StartAttack");
 
+        StartCoroutine(WaitAttackAnimation());
+    }
+
+    public void ResetAnim()
+    {
+        charAnimator.SetTrigger("ResetAnim");
+        StopAllCoroutines();
     }
 
     public void AttackAnimEnd()
@@ -73,6 +82,13 @@ public class CharacterAnimations : MonoBehaviour
     public void PickUpAnim()
     {
         // анимация подбора
+    }
+
+    private float attackAnimTime = 1;
+    IEnumerator WaitAttackAnimation()
+    {
+        yield return new WaitForSeconds(attackAnimTime);
+        AttackAnimEnd();
     }
 
     public delegate void TriggerHandle();
