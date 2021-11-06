@@ -69,7 +69,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6583706676345669915}
-  - component: {fileID: -2822078956761156447}
   m_Layer: 0
   m_Name: Transition Room 1
   m_TagString: Untagged
@@ -104,28 +103,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &-2822078956761156447
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6344649025123144099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 76edde93069a4804e8a1b2a433e18c62, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Begin: {fileID: 3508944756682378048}
-  End: {fileID: 5375736834768071155}
-  End2: {fileID: 0}
-  BlockMeshes: []
-  ChanceFromDistance:
-    serializedVersion: 2
-    m_Curve: []
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
 --- !u!1001 &3859628349997190656
 PrefabInstance:
   m_ObjectHideFlags: 0
