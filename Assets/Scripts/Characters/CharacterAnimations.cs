@@ -23,6 +23,7 @@ public class CharacterAnimations : MonoBehaviour
 
     void FixedUpdate()
     {
+      
         //Debug.Log("текущая скорость у: " + gameObject.name + " состовляет: " + Speed);
         float speedPU = Mathf.Clamp(Speed/character.agent.speed,0,1);
         charAnimator.SetFloat("Speed", speedPU);

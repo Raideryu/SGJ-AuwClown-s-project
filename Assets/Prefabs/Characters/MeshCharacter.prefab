@@ -41,7 +41,6 @@ GameObject:
   - component: {fileID: 3591971440974107173}
   - component: {fileID: 8696658069935189685}
   - component: {fileID: 778771722160490247}
-  - component: {fileID: 6838467849736942658}
   - component: {fileID: 5299840154661550042}
   - component: {fileID: 6871757586329204320}
   m_Layer: 0
@@ -102,25 +101,6 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
---- !u!95 &6838467849736942658
-Animator:
-  serializedVersion: 3
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4220697836958533791}
-  m_Enabled: 0
-  m_Avatar: {fileID: 9000000, guid: a51554276ba85284db1a3ea039536a72, type: 3}
-  m_Controller: {fileID: 9100000, guid: 5e33867cd37ed8c4eb5fb117c1a3f878, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorControllerStateOnDisable: 0
 --- !u!114 &5299840154661550042
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -149,7 +129,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ca179e1e42a43f2418f01c18e448f98a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackAnimationName: CharacterSimpleAttack
+  attackAnimationName: CharacterAttack
 --- !u!1 &5514047503489962758
 GameObject:
   m_ObjectHideFlags: 0
