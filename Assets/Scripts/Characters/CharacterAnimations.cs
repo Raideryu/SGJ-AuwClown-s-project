@@ -70,6 +70,11 @@ public class CharacterAnimations : MonoBehaviour
             OnAttackEnd.Invoke();
     }
 
+    public void PickUpAnim()
+    {
+        // анимация подбора
+    }
+
     public delegate void TriggerHandle();
     public event TriggerHandle OnAttackEnd;
 }

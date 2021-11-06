@@ -43,6 +43,7 @@ GameObject:
   - component: {fileID: 778771722160490247}
   - component: {fileID: 5299840154661550042}
   - component: {fileID: 6871757586329204320}
+  - component: {fileID: 843922816797315836}
   m_Layer: 0
   m_Name: MeshCharacter
   m_TagString: Untagged
@@ -130,6 +131,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   attackAnimationName: CharacterAttack
+--- !u!114 &843922816797315836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4220697836958533791}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b67657f053d252e488f4da9461f8bf6b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftArm: {fileID: 35683472026467911}
+  rightArm: {fileID: 5136244326822640190}
+  spine: {fileID: 5368907862668188603}
 --- !u!1 &5514047503489962758
 GameObject:
   m_ObjectHideFlags: 0

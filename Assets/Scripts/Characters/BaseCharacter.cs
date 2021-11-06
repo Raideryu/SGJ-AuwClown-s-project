@@ -15,14 +15,14 @@ public class BaseCharacter : MonoBehaviour
     [HideInInspector]
     public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
-
+    private CharacterInventar inventar;
     bool isAttack = false;
    
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animations = GetComponent<CharacterAnimations>();
-        
+        inventar = GetComponent<CharacterInventar>();
 
     }
 
@@ -70,9 +70,9 @@ public class BaseCharacter : MonoBehaviour
             BaseCharacter enemy = _target.GetComponent<BaseCharacter>();
             Attack(enemy);
         }
-        else if (_target.GetComponent<PickUp>())
+        else if (_target.GetComponent<PickableSub>())
         {
-            PickUp pick = _target.GetComponent<PickUp>();
+            PickableSub pick = _target.GetComponent<PickableSub>();
             PickUpObj(pick);
         }
     }
@@ -101,13 +101,16 @@ public class BaseCharacter : MonoBehaviour
     /// метод подбирания предмета 
     /// </summary>
     /// <param name="pickUp">сам предмет</param>
-    protected virtual void PickUpObj(PickUp pickUp)
+    protected virtual void PickUpObj(PickableSub pickUp)
     {
         Vector3 lookRot = transform.position;
         lookRot.x = pickUp.transform.position.x;
         lookRot.z = pickUp.transform.position.z;
         transform.LookAt(lookRot);
-       
+
+        animations.PickUpAnim();
+        inventar.PickUpSub(pickUp);
+
         // подобрать предмет
         Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
