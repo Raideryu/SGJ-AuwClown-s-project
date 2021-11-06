@@ -22,6 +22,7 @@ public class CharacterAnimations : MonoBehaviour
         lastPosition = transform.position;
         charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
+        charAnimator.SetTrigger("ResetAnim");
         //CreateAttackAnimEndEvent();
     }
 

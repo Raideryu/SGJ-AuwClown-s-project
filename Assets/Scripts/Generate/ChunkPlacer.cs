@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
-
+using UnityEngine.AI;
 public class ChunkPlacer : MonoBehaviour
 {
     [SerializeField] Chunk startRoomPrefab;
@@ -13,17 +13,29 @@ public class ChunkPlacer : MonoBehaviour
     [SerializeField] int mainPathRoomsCount = 5;
     [SerializeField] int tupikPathRoomsCount = 2;
 
+    [SerializeField] GameObject playerPrefab;
+
     private List<Chunk> spawnedChunks = new List<Chunk>();
     //private List<Chunk> spawnedTransition = new List<Chunk>();
 
     private Chunk startRoom;
     private Chunk finishRoom;
 
-    private void Update()
+    // точка спавна игрока
+    private RespawnPoint playerSpawnPoint;
+    private NavMeshSurface navMesh;
+
+    private void Start()
     {
-        if (Input.GetKeyDown(KeyCode.S))
-            GeneratePath();
+        navMesh = FindObjectOfType<NavMeshSurface>();
+        GeneratePath(); 
     }
+
+    //private void Update()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.S))
+    //        GeneratePath();
+    //}
 
     void GeneratePath()
     {
@@ -33,6 +45,9 @@ public class ChunkPlacer : MonoBehaviour
         startRoom = SpawnChunk(transform, startRoomPrefab); // стартовая комната
         startRoom.isRoom = true;
         spawnedChunks.Add(startRoom);
+
+        // записываем точку спавна игрока
+        playerSpawnPoint = startRoom.GetComponentInChildren<RespawnPoint>();
 
         // спавню комнаты главного пути
         for(int i=0;i< mainPathRoomsCount; i++)
@@ -45,14 +60,28 @@ public class ChunkPlacer : MonoBehaviour
             // заношу инфу - комната или коридор
             totalChank.isRoom = !prevChunk.isRoom;
             // говорю, что у этого выхода все сгенерировано
-            prevChunk.ExitsInfo[i].alreadeGenerated = true; //может не работать т.к. не ссылка, а новый лист...
+            prevChunk.ExitsInfo[rndExitNumb].alreadeGenerated = true; //может не работать т.к. не ссылка, а новый лист...
             // добавляю в общий массив
             spawnedChunks.Add(totalChank);
 
         }
-        spawnedChunks.Add(finishRoomPrefab);
+        finishRoom = SpawnChunk(transform, finishRoomPrefab); // стартовая комната
+        finishRoom.isRoom = true;
+        spawnedChunks.Add(finishRoom);
         // основной путь готов
+
+        navMesh.BuildNavMesh();
+        InstansePlayer();
     }
+
+    void InstansePlayer()
+    {
+        if (playerPrefab)
+            Instantiate(playerPrefab, playerSpawnPoint.transform.position, playerSpawnPoint.transform.rotation);
+        else
+            Debug.LogError("не назначен префаб игрока на ChunkPlacer");
+    }
+
     // для других комнат
     // int rndExitNumb = 0;
     ////if(prevChunk.Exits.Length =)

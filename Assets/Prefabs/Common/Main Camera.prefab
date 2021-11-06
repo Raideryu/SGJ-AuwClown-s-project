@@ -27,7 +27,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8333325725959113572}
-  m_LocalRotation: {x: 0.4135485, y: -0, z: -0, w: 0.9104821}
+  m_LocalRotation: {x: 0.41354942, y: 0, z: 0, w: 0.9104817}
   m_LocalPosition: {x: 0, y: 12.43, z: -8.69}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
@@ -98,6 +98,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cameraSpeed: 3
+  cameraOffset: {x: 0.35, y: -12.39, z: 10.85}
   player: {fileID: 0}
 --- !u!114 &2069373380642807787
 MonoBehaviour:

@@ -1,0 +1,55 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &3536634455615778348
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3536634455615778350}
+  - component: {fileID: 3536634455615778351}
+  m_Layer: 0
+  m_Name: ChunkSpawner
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &3536634455615778350
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536634455615778348}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0.2, y: -0.1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3536634455615778351
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3536634455615778348}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ebb962e016d388c46af4a04a4d908353, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  startRoomPrefab: {fileID: 8081636426109657, guid: 936c2f93ac785324b904d0598ca536ab, type: 3}
+  finishRoomPrefab: {fileID: 193846967154137103, guid: 01a7b3b4062f8e743aade48e962a2b03, type: 3}
+  ChunkPrefabs:
+  - {fileID: 8027818817591774974, guid: dc423afd4acafc74a8e37d37e6b89bc7, type: 3}
+  - {fileID: 7862573865425541581, guid: 52bbb670a6af30e41bf18aff5563cc52, type: 3}
+  TransitionPrefabs:
+  - {fileID: 6872687984953407214, guid: eb9d203571146b14b8ddee391c0f533f, type: 3}
+  mainPathRoomsCount: 5
+  tupikPathRoomsCount: 2
+  playerPrefab: {fileID: 0}
