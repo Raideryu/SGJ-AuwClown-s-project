@@ -12,7 +12,7 @@ public class UIDrawer : MonoBehaviour
     public Sprite fullHeart;
     public Sprite EmptyHeart;
 
-    public void DrawHP()
+    public void DrawHP(int hp, int maxhp)
     {
 
     }
