@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-
 public class ChunkPlacer : MonoBehaviour
 {
     [SerializeField] Chunk startRoomPrefab;
@@ -22,23 +21,53 @@ public class ChunkPlacer : MonoBehaviour
 
     void GeneratePath()
     {
-        foreach (Chunk chunks in spawnedChunks)
-            Destroy(chunks.gameObject);
-        spawnedChunks.Clear();
+        DestroyChunks();
 
 
         startRoom = SpawnChunk(transform, startRoom); // стартовая комната
-
+        startRoom.isRoom = true;
         spawnedChunks.Add(startRoom);
 
         // спавню комнаты главного пути
         for(int i=0;i< mainPathRoomsCount; i++)
         {
-            int rndEnumb = Random.Range(0,spawnedChunks.Last().Exits.Length-1);
+            Chunk prevChunk = spawnedChunks.Last();
+            int rndExitNumb = Random.Range(0, prevChunk.Exits.Length-1); //выбираю случайный выход
+            
+            // спавню комнату или корридор (если prevChunk.isRoom==true)
+            Chunk totalChank = SpawnChunk(prevChunk.Exits[rndExitNumb], GetRNDChunk(prevChunk.isRoom));
+            // заношу инфу - комната или коридор
+            totalChank.isRoom = !prevChunk.isRoom;
+            // говорю, что у этого выхода все сгенерировано
+            prevChunk.ExitsInfo[i].alreadeGenerated = true; //может не работать т.к. не ссылка, а новый лист...
+            // добавляю в общий массив
+            spawnedChunks.Add(totalChank);
+
+        }
+        spawnedChunks.Add(finishRoom);
+        // основной путь готов
+    }
+
+    Chunk GetRNDChunk(bool prevIsRoom)
+    {
+        if (!prevIsRoom)
+        {
+            int rndN = Random.Range(0, ChunkPrefabs.Length - 1);
+            return ChunkPrefabs[rndN];
+        }
+        else
+        {
+            int rndN = Random.Range(0, TransitionPrefabs.Length - 1);
+            return TransitionPrefabs[rndN];
         }
     }
 
-
+    void DestroyChunks()
+    {
+        foreach (Chunk chunks in spawnedChunks)
+            Destroy(chunks.gameObject);
+        spawnedChunks.Clear();
+    }
 
 
 
