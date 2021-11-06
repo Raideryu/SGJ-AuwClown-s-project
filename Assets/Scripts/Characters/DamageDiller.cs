@@ -20,7 +20,14 @@ public class DamageDiller : MonoBehaviour
 
     public void GetDamage(BaseCharacter enemy)
     {
+        
+        int dam = weapon.damage1 * player.PowerPlayer;
+
         PlayerStats enemyStat = enemy.GetComponent<PlayerStats>();
-        enemyStat.GetDamage(123);
+        if(enemyStat != null && tag == "Weapon")
+        {
+            enemyStat.GetDamage(dam);
+        }
+        
     }
 }
