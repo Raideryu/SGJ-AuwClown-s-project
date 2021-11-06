@@ -51,6 +51,9 @@ public class BaseCharacter : MonoBehaviour
 
         agent.stoppingDistance = target != null ? actionRange : movingRange; // если есть цель для атаки, то разное растояние
 
+        if (_target != target)
+            animations.ResetAnim();
+
         Move(targetPos);
         _target = target;
     }
@@ -89,7 +92,7 @@ public class BaseCharacter : MonoBehaviour
         lookRot.x = attackTarget.transform.position.x;
         lookRot.z = attackTarget.transform.position.z;
         transform.LookAt(lookRot);
-       
+
         isAttack = true;
 
         // вызвать анимацию аттаки
@@ -112,13 +115,13 @@ public class BaseCharacter : MonoBehaviour
         inventar.PickUpSub(pickUp);
 
         // подобрать предмет
-        Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
+       // Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
 
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
-        Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
+      //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
     }
 
     IEnumerator AttackCD()
