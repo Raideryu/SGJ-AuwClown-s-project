@@ -22,14 +22,16 @@ public class CharacterStats : MonoBehaviour
                 healthPlayer = value;
                 // тут обновить HUD
             }
+
+            Debug.Log("у меня: " + gameObject.name + " здоровье: " + healthPlayer);
         }
     }
     [SerializeField]
     private int MaxHealthPlayer =2;
     [SerializeField]
-    public int powerPlayer = 1;
-    
-    int PowerPlayer
+    int powerPlayer = 1;
+
+    public int PowerPlayer
     {
         get => powerPlayer;
         set
@@ -55,10 +57,10 @@ public class CharacterStats : MonoBehaviour
     [SerializeField]
     private int MaxIntellectPlayer = 2;
 
-    public Image HealthBar;
+   // public Image HealthBar;
 
     private BaseCharacter character;
-
+    bool isDead = false;
     private void Start()
     {
         character = GetComponent<BaseCharacter>();
@@ -67,18 +69,13 @@ public class CharacterStats : MonoBehaviour
    public void GetDamage(int damage)
     {
         HealthPlayer -= damage;
-        HealthBar.fillAmount = HealthPlayer * 0.1f;
-        if(HealthPlayer <= 0)
-        {
-            Debug.Log("Умер персонаж: " + gameObject.name);
-            Die();
-        }
+
     }
 
     void GetHealth(int bonusHealth)
     {
         HealthPlayer += bonusHealth;
-        HealthBar.fillAmount = HealthPlayer * 0.1f;
+
         if (HealthPlayer > MaxHealthPlayer)
         {
             HealthPlayer = MaxHealthPlayer;
@@ -86,6 +83,7 @@ public class CharacterStats : MonoBehaviour
     }
     void Die()
     {
+        if (isDead) return;
         character.Die();
     }
 }

@@ -165,6 +165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 521586e616c4d5745bd8d0281105ba4f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  skillModifire: 1
 --- !u!114 &2254076609391253960
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -174,12 +175,12 @@ MonoBehaviour:
   m_GameObject: {fileID: 4220697836958533791}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 116afecf74492144ba06af8ed73ca7fe, type: 3}
+  m_Script: {fileID: 11500000, guid: dd1cb72077a881441bfc5b7713f77265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   healthPlayer: 10
   MaxHealthPlayer: 2
-  PowerPlayer: 1
+  powerPlayer: 1
   MaxPowerPlayer: 2
   AgilityPlayer: 1
   MaxAgilityPlayer: 2

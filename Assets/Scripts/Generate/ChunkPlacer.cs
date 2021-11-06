@@ -62,6 +62,7 @@ public class ChunkPlacer : MonoBehaviour
         if (!prevIsRoom)
         {
             int rndN = Random.Range(0, ChunkPrefabs.Length - 1);
+            
             return ChunkPrefabs[rndN];
         }
         else

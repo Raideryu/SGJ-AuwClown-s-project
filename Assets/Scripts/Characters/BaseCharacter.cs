@@ -147,6 +147,12 @@ public class BaseCharacter : MonoBehaviour
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
+        
+        if (_target.GetComponent<BaseCharacter>())
+        {
+            dd.GetDamageEnemy(_target.GetComponent<BaseCharacter>());
+        }
+       
         //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
     }
 
@@ -159,12 +165,15 @@ public class BaseCharacter : MonoBehaviour
     //смерть
     public void Die()
     {
+        if (isDied) return;
         animations.DieAnim();
+        isDied = true;
     }
 
     //воскрешение
     public void SunDay()
     {
         animations.SundayAnim();
+        isDied = false;
     }
 }

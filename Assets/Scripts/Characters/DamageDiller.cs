@@ -21,14 +21,15 @@ public class DamageDiller : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        characterStats = GetComponent<CharacterStats>();
         inventar = GetComponent<CharacterInventar>();
     }
 
     public void GetDamageEnemy(BaseCharacter enemy)
     {
-        int dam = WeaponDamage * characterStats.powerPlayer;
+        int dam = WeaponDamage * characterStats.PowerPlayer;
 
-        int resDamage = (dam + characterStats.powerPlayer) * skillModifire;
+        int resDamage = (dam + characterStats.PowerPlayer) * skillModifire;
         CharacterStats enemyStat = enemy.GetComponent<CharacterStats>();
 
         enemyStat.GetDamage(resDamage);
