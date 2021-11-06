@@ -12,6 +12,7 @@ public class BaseCharacter : MonoBehaviour
     float attackCDTime = 1;
 
     private GameObject _target;
+
     [HideInInspector]
     public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
@@ -50,6 +51,7 @@ public class BaseCharacter : MonoBehaviour
 
         if (_target && agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
         {
+           
             Action();
             
         }
@@ -86,7 +88,11 @@ public class BaseCharacter : MonoBehaviour
         if (_target.GetComponent<BaseCharacter>())
         {
             BaseCharacter enemy = _target.GetComponent<BaseCharacter>();
-
+            if (enemy.isDied)
+            {
+                _target = null;
+                return;
+            }
             Vector3 lookRot = transform.position;
             lookRot.x = enemy.transform.position.x;
             lookRot.z = enemy.transform.position.z;
