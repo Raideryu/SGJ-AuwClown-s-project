@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class PlayerStats : MonoBehaviour
+public class CharacterStats : MonoBehaviour
 {
     [SerializeField]
     private int healthPlayer =10;

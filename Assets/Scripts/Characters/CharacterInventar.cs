@@ -7,11 +7,11 @@ public class CharacterInventar : MonoBehaviour
     [SerializeField]
     Transform leftArm, rightArm, spine;
     [SerializeField]
-    Weapons currentWeapon;
+    public Weapons currentWeapon;
     [SerializeField]
-    SecondWeapon currentSecondWeapon;
+    public SecondWeapon currentSecondWeapon;
     [SerializeField]
-    Scroll currentScroll;
+    public Scroll currentScroll;
     // Start is called before the first frame update
     void Start()
     {
