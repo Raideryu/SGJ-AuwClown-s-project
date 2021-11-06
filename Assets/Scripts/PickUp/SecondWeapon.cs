@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PickUp : MonoBehaviour
+public class SecondWeapon : PickableSub
 {
-    ChangableCursor cursor;
     // Start is called before the first frame update
     void Start()
     {
-        cursor = FindObjectOfType<ChangableCursor>();
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

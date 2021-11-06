@@ -17,7 +17,9 @@ public class BaseCharacter : MonoBehaviour
     private CharacterAnimations animations;
     private CharacterInventar inventar;
     bool isAttack = false;
-   
+
+    bool taskEnd;
+
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -39,7 +41,7 @@ public class BaseCharacter : MonoBehaviour
         if (!_target) return; // если нет цели или недошел до нее 
         
 
-        if (_target && agent.remainingDistance <= actionRange) // если растояние до цели меньше растояния действия
+        if (_target && agent.remainingDistance <= agent.stoppingDistance) // если растояние до цели меньше растояния действия
         {
             Action();
         }
@@ -48,8 +50,12 @@ public class BaseCharacter : MonoBehaviour
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
     {
         if (target == this.gameObject) return; // проверка сам на себя
-
-        agent.stoppingDistance = target != null ? actionRange : movingRange; // если есть цель для атаки, то разное растояние
+        
+        if (target && target.gameObject.GetComponent<BaseCharacter>())
+            agent.stoppingDistance = actionRange;
+        else agent.stoppingDistance = movingRange;
+        
+        taskEnd = false;
 
         if (_target != target)
             animations.ResetAnim();
@@ -73,7 +79,7 @@ public class BaseCharacter : MonoBehaviour
             BaseCharacter enemy = _target.GetComponent<BaseCharacter>();
             Attack(enemy);
         }
-        else if (_target.GetComponent<PickableSub>())
+        else if (_target.GetComponent<PickableSub>() && !taskEnd)
         {
             PickableSub pick = _target.GetComponent<PickableSub>();
             PickUpObj(pick);
@@ -106,11 +112,12 @@ public class BaseCharacter : MonoBehaviour
     /// <param name="pickUp">сам предмет</param>
     protected virtual void PickUpObj(PickableSub pickUp)
     {
-        Vector3 lookRot = transform.position;
-        lookRot.x = pickUp.transform.position.x;
-        lookRot.z = pickUp.transform.position.z;
-        transform.LookAt(lookRot);
-
+       
+        //Vector3 lookRot = transform.position;
+        //lookRot.x = pickUp.transform.position.x;
+        //lookRot.z = pickUp.transform.position.z;
+        //transform.LookAt(lookRot);
+        taskEnd = true;
         animations.PickUpAnim();
         inventar.PickUpSub(pickUp);
 
