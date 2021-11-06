@@ -19,12 +19,18 @@ public class ChunkPlacer : MonoBehaviour
     private Chunk startRoom;
     private Chunk finishRoom;
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.S))
+            GeneratePath();
+    }
+
     void GeneratePath()
     {
         DestroyChunks();
 
 
-        startRoom = SpawnChunk(transform, startRoom); // стартовая комната
+        startRoom = SpawnChunk(transform, startRoomPrefab); // стартовая комната
         startRoom.isRoom = true;
         spawnedChunks.Add(startRoom);
 
@@ -32,8 +38,8 @@ public class ChunkPlacer : MonoBehaviour
         for(int i=0;i< mainPathRoomsCount; i++)
         {
             Chunk prevChunk = spawnedChunks.Last();
-            int rndExitNumb = Random.Range(0, prevChunk.Exits.Length-1); //выбираю случайный выход
-            
+            int rndExitNumb = Random.Range(0, prevChunk.Exits.Length - 1); //выбираю случайный выход
+
             // спавню комнату или корридор (если prevChunk.isRoom==true)
             Chunk totalChank = SpawnChunk(prevChunk.Exits[rndExitNumb], GetRNDChunk(prevChunk.isRoom));
             // заношу инфу - комната или коридор
@@ -44,10 +50,13 @@ public class ChunkPlacer : MonoBehaviour
             spawnedChunks.Add(totalChank);
 
         }
-        spawnedChunks.Add(finishRoom);
+        spawnedChunks.Add(finishRoomPrefab);
         // основной путь готов
     }
-
+    // для других комнат
+    // int rndExitNumb = 0;
+    ////if(prevChunk.Exits.Length =)
+    // rndExitNumb = Random.Range(0, prevChunk.Exits.Length-1); //выбираю случайный выход
     Chunk GetRNDChunk(bool prevIsRoom)
     {
         if (!prevIsRoom)
@@ -106,30 +115,34 @@ public class ChunkPlacer : MonoBehaviour
     //}
 
 
-    List<Chunk> SpawnOneRoom(Transform exit)
-    {
-        //if (spawnedChunks.Count >= maxRooms) return;
+    //List<Chunk> SpawnOneRoom(Transform exit)
+    //{
+    //    //if (spawnedChunks.Count >= maxRooms) return;
 
-        Chunk rndChunk = TransitionPrefabs[Random.Range(0, ChunkPrefabs.Length - 1)];
+    //    Chunk rndChunk = TransitionPrefabs[Random.Range(0, ChunkPrefabs.Length - 1)];
 
-        Chunk tr = Instantiate(rndChunk, exit.position + rndChunk.Enter.position, exit.rotation);
-        tr.transform.position = exit.position + tr.Enter.localPosition;
-        //spawnedTransition.Add(tr);
+    //    Chunk tr = Instantiate(rndChunk, exit.position + rndChunk.Enter.position, exit.rotation);
+    //    tr.transform.position = exit.position + tr.Enter.localPosition;
+    //    //spawnedTransition.Add(tr);
 
-        rndChunk = ChunkPrefabs[Random.Range(0, ChunkPrefabs.Length - 1)];
-        Chunk room = Instantiate(rndChunk, tr.Exits[0].position + rndChunk.Enter.position, tr.Exits[0].rotation);
-        //room.transform.position = tr.Exits[0].position + room.Enter.localPosition;
-        //spawnedChunks.Add(room);
+    //    rndChunk = ChunkPrefabs[Random.Range(0, ChunkPrefabs.Length - 1)];
+    //    Chunk room = Instantiate(rndChunk, tr.Exits[0].position + rndChunk.Enter.position, tr.Exits[0].rotation);
+    //    //room.transform.position = tr.Exits[0].position + room.Enter.localPosition;
+    //    //spawnedChunks.Add(room);
 
-        return new List<Chunk> { tr };
-    }
+    //    return new List<Chunk> { tr };
+    //}
 
     Chunk SpawnChunk(Transform previosExit, Chunk chunkPref)
     {
+        Chunk ch;
         //Chunk rndChunk = TransitionPrefabs[Random.Range(0, ChunkPrefabs.Length - 1)];
+        if (chunkPref.Enter)
+            ch = Instantiate(chunkPref, previosExit.position + chunkPref.Enter.position, previosExit.rotation);
+        else
+            ch = Instantiate(chunkPref, previosExit.position, previosExit.rotation);
+        //ch.transform.position = previosExit.position + ch.Enter.localPosition;
 
-        Chunk ch = Instantiate(chunkPref, previosExit.position + chunkPref.Enter.position, previosExit.rotation);
-        ch.transform.position = previosExit.position + ch.Enter.localPosition;
         return ch;
     }
 
