@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 3510738477649164896}
   - component: {fileID: 8702561948165880440}
   m_Layer: 0
-  m_Name: TransitionRoom rotate 90 R
+  m_Name: Transition Room 2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
