@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 4192301877333895213}
   - component: {fileID: 7313974382387997258}
   m_Layer: 0
-  m_Name: BaseWeapon
+  m_Name: BaseAxe
   m_TagString: PickUp
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
