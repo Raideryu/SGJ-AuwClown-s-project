@@ -7,32 +7,66 @@ public class CharacterAnimations : MonoBehaviour
 {
     [SerializeField]
     string attackAnimationName = "CharacterAttack", pickingUpAnimationName = "PickingUp";
+    [SerializeField]
+    int speedLerp = 10;
     Animator charAnimator;
     BaseCharacter character;
-    Vector3 lastPosition;
+    
+    Vector3 lastPositiont;
+    List<float> lastPointsSpeed = new List<float>();
 
     private float attackAnimTime = 1;
     private float pickUpAnimTime = 1;
     bool isAttack = false;
-    public float Speed
-    { get { return Vector3.Distance(lastPosition, transform.position) / Time.fixedDeltaTime; } }
+    //public float Speed
+    //{ get 
+    //    { 
+
+    //        return Vector3.Distance(lastPosition, transform.position) / Time.fixedDeltaTime; 
+    //    } 
+    //}
     
     void Start()
     {
-        lastPosition = transform.position;
+        
+        for(int i=0; i < speedLerp; i++)
+        {
+            lastPointsSpeed.Add(0);
+        }
+        lastPositiont = transform.position;
+
         charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
         charAnimator.SetTrigger("ResetAnim");
         //CreateAttackAnimEndEvent();
     }
 
+    float Speed(Vector3 newPoint)
+    {
+        lastPointsSpeed.Add(Vector3.Distance(newPoint, lastPositiont)/Time.fixedDeltaTime);
+
+        //List<float> aaa = lastPointsSpeed.GetRange(1, lastPointsSpeed.Count - 2);
+        //lastPointsSpeed.Clear();
+        //lastPointsSpeed.AddRange(aaa)
+        lastPointsSpeed.Remove(lastPointsSpeed[0]);
+        lastPositiont = newPoint;
+        float speed = 0;
+        foreach (float a in lastPointsSpeed)
+        {
+            speed += a;
+        }
+
+        return speed / lastPointsSpeed.Count;
+        
+        
+       
+    }
+
     void FixedUpdate()
     {
-
-        //Debug.Log("текущая скорость у: " + gameObject.name + " состовляет: " + Speed);
-        float speedPU = Mathf.Clamp(Speed / character.agent.speed, 0, 1);
+        float speed = Speed(transform.position);
+        float speedPU = Mathf.Clamp(speed / character.agent.speed, 0, 1);
         charAnimator.SetFloat("Speed", speedPU);
-        lastPosition = transform.position;
     }
 
     public void DieAnim() // смерть

@@ -11,24 +11,32 @@ public class BaseCharacter : MonoBehaviour
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
 
-    private GameObject _target;
+    
 
+    //ссылки на компоненты
     [HideInInspector]
     public NavMeshAgent agent; // компонент, который отвечает за перемещение
     private CharacterAnimations animations;
     private CharacterInventar inventar;
-    bool isAttack = false;
-    public bool isDied=false;
+    private DamageDiller dd;
+    private PickableSub curentPicableTarget;
+
+    public bool isDied = false; // перс умер
+
+    CharacterAction currentAction = CharacterAction.None; // текущая задача
+
+    bool isAttack = false; //атакует
     bool taskEnd;
-    DamageDiller dd;
-    PickableSub curentPicableTarget;
+    bool actionstarted = false;
+    
+    // текущая цель 
+    private GameObject _target;
 
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
         animations = GetComponent<CharacterAnimations>();
         inventar = GetComponent<CharacterInventar>();
-
         dd = GetComponent<DamageDiller>();
     }
 
@@ -41,40 +49,52 @@ public class BaseCharacter : MonoBehaviour
             animations.OnAttackEnd += AttackEnd;  // событие завершения анимации атаки (по сути сам удар)
             animations.OnPickUpEnd += PickUpEnd;
         }
-
     }
 
     private void FixedUpdate()
     {
-        if (!_target || isDied) return; // если нет цели или недошел до нее 
+        if (!_target || isDied || currentAction == CharacterAction.None) return; // если нет цели или недошел до нее 
 
-
-        if (_target && agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
-        {
-           
+        if (agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
             Action();
-            
-        }
     }
 
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
     { 
-        if (target == this.gameObject || isDied) return; // проверка сам на себя
-
-        if (target && target.gameObject.GetComponent<BaseCharacter>())
+        if (target == this.gameObject || isDied) return; // проверка сам на себя или на смерть
+        
+        if(!target || target.tag == "Ground")
+        {
+            currentAction = CharacterAction.None;
+            agent.stoppingDistance = movingRange;
+        }
+        else if(target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
+        {
+            currentAction = CharacterAction.Attack;
             agent.stoppingDistance = actionRange;
-        else agent.stoppingDistance = movingRange;
+        }
+        else if(target.TryGetComponent< PickableSub>(out PickableSub pick))
+        {
+            currentAction = CharacterAction.PickUp;
+            agent.stoppingDistance = movingRange;
+        }
 
-        taskEnd = false;
-
+       
+        
         if (_target != target)
             animations.ResetAnim();
 
         Move(targetPos);
-        _target = target;
-        actionstarted = true;
+        if (target && target.tag != "Ground")
+        {
+            taskEnd = false;
+            _target = target;
+            actionstarted = true;
+        }
+        else _target = null;
+        
     }
-    bool actionstarted = false;
+    
 
     void Move(Vector3 target)
     {
@@ -84,10 +104,10 @@ public class BaseCharacter : MonoBehaviour
 
     protected virtual void Action()
     {
+        
         // атаковать
-        if (_target.GetComponent<BaseCharacter>())
+        if (_target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
         {
-            BaseCharacter enemy = _target.GetComponent<BaseCharacter>();
             if (enemy.isDied)
             {
                 _target = null;
@@ -98,12 +118,10 @@ public class BaseCharacter : MonoBehaviour
             lookRot.z = enemy.transform.position.z;
             transform.LookAt(lookRot);
 
-
             Attack(enemy);
         }
-        else if (_target.GetComponent<PickableSub>() && !taskEnd && actionstarted)
+        else if (_target.TryGetComponent<PickableSub>(out PickableSub pick) && !taskEnd && actionstarted)
         {
-            PickableSub pick = _target.GetComponent<PickableSub>();
             if (pick != curentPicableTarget)
             StartPickUpObj(pick);
             actionstarted = false; 
@@ -181,5 +199,10 @@ public class BaseCharacter : MonoBehaviour
     {
         animations.SundayAnim();
         isDied = false;
+    }
+
+    public enum CharacterAction
+    {
+        None,Attack,PickUp
     }
 }

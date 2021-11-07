@@ -14,9 +14,6 @@ public class CameraFacingBillboard : MonoBehaviour
     //Orient the camera after all movement is completed this frame to avoid jittering
     void LateUpdate()
     {
-        //Tra
-        //transform.LookAt(m_Camera.transform,
-        //  m_Camera.transform.rotation * Vector3.up);
         Vector3 a = m_Camera.transform.position ;
         a.y = transform.position.y;
         transform.LookAt(a);

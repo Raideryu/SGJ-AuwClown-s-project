@@ -135,6 +135,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attackAnimationName: CharacterAttack
   pickingUpAnimationName: PickingUp
+  speedLerp: 3
 --- !u!114 &843922816797315836
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,14 +180,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   healthPlayer: 10
-  MaxHealthPlayer: 2
+  maxHealthPlayer: 10
   powerPlayer: 1
-  MaxPowerPlayer: 2
-  AgilityPlayer: 1
-  MaxAgilityPlayer: 2
-  IntellectPlayer: 1
-  MaxIntellectPlayer: 2
-  HealthBar: {fileID: 0}
+  agilityPlayer: 1
+  staminaPlayer: 5
+  maxStaminaPlayer: 5
 --- !u!1 &5514047503489962758
 GameObject:
   m_ObjectHideFlags: 0
