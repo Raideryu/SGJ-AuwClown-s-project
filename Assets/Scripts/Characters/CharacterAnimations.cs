@@ -151,8 +151,8 @@ public class CharacterAnimations : MonoBehaviour
     public void StaartAttacSpell()
     {
         audioSource.SpecialAttackSoundPlay();
-        //charAnimator.SetTrigger("StartSpellAttack");
-        charAnimator.SetTrigger("StartAttack");
+        charAnimator.SetTrigger("StartSpellAttack");
+        //charAnimator.SetTrigger("StartAttack");
         StartCoroutine(WaitSpellAttackAnimation());
     }
 
@@ -170,8 +170,8 @@ public class CharacterAnimations : MonoBehaviour
     public void StartProtectSpel()
     {
         audioSource.BlockSoundPlay();
-        //charAnimator.SetTrigger("StartSpelProtect");
-        charAnimator.SetTrigger("StartAttack");
+        charAnimator.SetTrigger("StartSpelProtect");
+        //charAnimator.SetTrigger("StartAttack");
         StartCoroutine(WaitSpellAttackAnimation());
     }
     public void EndProtectSpel ()
