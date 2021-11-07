@@ -7,7 +7,8 @@ public class ChunkPlacer : MonoBehaviour
 {
     [SerializeField] Chunk startRoomPrefab;
     [SerializeField] Chunk finishRoomPrefab;
-    [SerializeField] Chunk[] ChunkPrefabs;
+    [SerializeField] Chunk[] BigRoomPrefabs;
+    [SerializeField] Chunk[] blockedRoomPrefabs;
     [SerializeField] Chunk[] TransitionPrefabs;
 
     [SerializeField] int mainPathRoomsCount = 5;
@@ -53,7 +54,7 @@ public class ChunkPlacer : MonoBehaviour
         for(int i=0;i< mainPathRoomsCount; i++)
         {
             Chunk prevChunk = spawnedChunks.Last();
-            int rndExitNumb = Random.Range(0, prevChunk.Exits.Length - 1); //выбираю случайный выход
+            int rndExitNumb = Random.Range(0, prevChunk.Exits.Length); //выбираю случайный выход
 
             // спавню комнату или корридор (если prevChunk.isRoom==true)
             Chunk totalChank = SpawnChunk(prevChunk.Exits[rndExitNumb], GetRNDChunk(prevChunk.isRoom));
@@ -69,6 +70,27 @@ public class ChunkPlacer : MonoBehaviour
         finishRoom.isRoom = true;
         spawnedChunks.Add(finishRoom);
         // основной путь готов
+
+        List<Chunk> secondPath = new List<Chunk>();
+
+        // делаю ответвления
+        foreach(Chunk chunk in spawnedChunks)
+        {
+            foreach(ExitInfo exitInfo in chunk.ExitsInfo)
+            {
+                if (!exitInfo.alreadeGenerated)
+                {
+                    //создать корридор и комнату
+                    Chunk tr = SpawnChunk(exitInfo.transform, GetRNDChunk(true));
+                    Chunk room = SpawnChunk(tr.Exits[0], GetRNDBlockChunk());
+                    exitInfo.alreadeGenerated = true;
+                    secondPath.Add(tr);
+                    secondPath.Add(room);
+
+                }
+            }
+        }
+
 
         navMesh.BuildNavMesh();
         InstansePlayer();
@@ -90,16 +112,25 @@ public class ChunkPlacer : MonoBehaviour
     {
         if (!prevIsRoom)
         {
-            int rndN = Random.Range(0, ChunkPrefabs.Length - 1);
+            int rndN = Random.Range(0, BigRoomPrefabs.Length);
             
-            return ChunkPrefabs[rndN];
+            return BigRoomPrefabs[rndN];
         }
         else
         {
-            int rndN = Random.Range(0, TransitionPrefabs.Length - 1);
+            int rndN = Random.Range(0, TransitionPrefabs.Length);
             return TransitionPrefabs[rndN];
         }
     }
+
+    Chunk GetRNDBlockChunk()
+    {
+        int rndN = Random.Range(0, blockedRoomPrefabs.Length);
+
+        return blockedRoomPrefabs[rndN];
+    }
+
+
 
     void DestroyChunks()
     {
