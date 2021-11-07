@@ -35,6 +35,7 @@ public class DamageDiller : MonoBehaviour
         inventar = GetComponent<CharacterInventar>();
     }
 
+    // перенести в playerInput
     //void Update()
     //{
     //    if(Input.GetKeyDown(KeyCode.Q))

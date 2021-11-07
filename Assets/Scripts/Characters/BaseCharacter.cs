@@ -11,7 +11,7 @@ public class BaseCharacter : MonoBehaviour
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
     //[SerializeField, Tooltip("время КД способности")]
-    //float skillCDTime = 3;
+    float skillCDTime = 3;
 
 
     //ссылки на компоненты
@@ -30,7 +30,7 @@ public class BaseCharacter : MonoBehaviour
     bool isAttack = false; //атакует
     bool taskEnd;
     bool actionstarted = false;
-    
+    bool spellStarted = false;
     // текущая цель 
     private GameObject _target;
     private BaseCharacter _enemy;
@@ -61,6 +61,16 @@ public class BaseCharacter : MonoBehaviour
             currentAction = CharacterAction.None;
 
         if (agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
+            /// тут если spellStarted и currentAction == что-то из: AttackSpel, ProtectSpel то вызвать соответствующий метод, иначе Action()
+            if(currentAction == CharacterAction.AttackSpel || currentAction == CharacterAction.ProtectSpel)
+            {
+                //если spellStarted то вызывай дибо 
+                if (spellStarted)
+                {
+                    //то вызывай метод скила
+                    spellStarted = false;
+                }
+            }
             Action();
     }
 
@@ -102,11 +112,18 @@ public class BaseCharacter : MonoBehaviour
         else _target = null;
         
     }
-    
+    // должен вызываться из player input
+    public void InputSpel() // параметры тип скила 
+    {
+        /// если вызываемый скилл в кд, то reeturn
 
+        // в зависимости от типа скила задаь
+        /// curentAction -> AttackSpel, ProtectSpel
+        spellStarted = true;
+    }
     void Move(Vector3 target)
     {
-        // переместить персонажа
+        // переместить персонажа 
         agent.SetDestination(target);
     }
 
@@ -142,7 +159,7 @@ public class BaseCharacter : MonoBehaviour
     /// атаковать цель
     /// </summary>
     /// <param name="attackTarget">цель аттаки</param>
-    protected virtual void Attack(BaseCharacter attackTarget)
+     void Attack(BaseCharacter attackTarget)
     {
         if (isAttack) return;
 
@@ -151,21 +168,43 @@ public class BaseCharacter : MonoBehaviour
         animations.StartAttack();
     }
 
-    //protected virtual void Skill(BaseCharacter attackTarget)
-    //{
-    //    if (isSkill) return;
-
-    //    isSkill = true;
-    //    // вызвать анимацию способности
+    // методы 1го скила: начало
+       
+    public void StartAttackSpel()
+    {
         
-    //}
+        animations.StaartAttacSpell();
+    }
+    public void EndAttackSpel()
+    {
+        StartCoroutine(AttackSpelCD());
+        if(currentAction == CharacterAction.AttackSpel)
+        if (_enemy)
+        {
+            // добавить модификатор урона скила
+            dd.GetDamageEnemy(_enemy);
+        }
 
+        //сбросить curentAction в Attack
+        currentAction = CharacterAction.AttackSpel;
+    }
+
+    IEnumerator AttackSpelCD()
+    {
+        // нельзя юзать этот скил, пока не пройдет кд
+        yield return new WaitForSeconds(skillCDTime); // skillCDTime получать из inventar -> weapon ...
+
+        isSkill = false;
+        // снять запрет на повторное использование
+    }
+    // методы 1го скила: конец
+    // аналогично для защитного скила
 
     /// <summary>
     /// метод подбирания предмета 
     /// </summary>
     /// <param name="pickUp">сам предмет</param>
-    protected virtual void StartPickUpObj(PickableSub pickUp)
+    void StartPickUpObj(PickableSub pickUp)
     {
         //taskEnd = true;
         animations.StartPickUpAnim();
@@ -173,29 +212,22 @@ public class BaseCharacter : MonoBehaviour
 
     }
 
+    // методы 1го скила: начало
     void PickUpEnd()
     {
         if (curentPicableTarget)
             inventar.PickUpSub(curentPicableTarget);
         curentPicableTarget = null;
     }
-    //void SkillEnd()
-    //{
-    //    StartCoroutine(SkillCD());
+   
+    
+    public void TeleportToTarget(Vector3 moveTo)
+    {
+        transform.position = moveTo;
+        animations.StartTeleport();
+        inventar.DestroySkroll();
+    }
 
-    //    if (_target && _target.GetComponent<BaseCharacter>())
-    //    {
-    //        dd.GetDamageEnemy(_target.GetComponent<BaseCharacter>());
-    //    }
-
-    //    //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
-    //}
-
-    //IEnumerator SkillCD()
-    //{
-    //    yield return new WaitForSeconds(skillCDTime);
-    //    isSkill = false;
-    //}
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
@@ -231,6 +263,6 @@ public class BaseCharacter : MonoBehaviour
 
     public enum CharacterAction
     {
-        None,Attack,PickUp
+        None,Attack,PickUp, AttackSpel, ProtectSpel, Teleport
     }
 }

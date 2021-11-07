@@ -73,9 +73,11 @@ public class CharacterInventar : MonoBehaviour
 
     }
 
-    // Update is called once per frame
-    void Update()
+    public void DestroySkroll()
     {
-
+        if (currentScroll)
+        {
+            Destroy(currentScroll.gameObject);
+        }
     }
 }

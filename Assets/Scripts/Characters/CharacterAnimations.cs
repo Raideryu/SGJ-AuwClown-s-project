@@ -151,12 +151,16 @@ public class CharacterAnimations : MonoBehaviour
     public void StaartAttacSpell()
     {
         audioSource.SpecialAttackSoundPlay();
+
+        charAnimator.SetTrigger("StartSpellAttack");
+
+        StartCoroutine(WaitSpellAttackAnimation());
     }
 
     public void EndAttacSpell()
     {
         // конец супер атаки
-
+        character.EndAttackSpel();
     }
 
     public void StartTeleport()
@@ -164,18 +168,14 @@ public class CharacterAnimations : MonoBehaviour
         audioSource.TeleportSoundPlay();
     }
 
-    public void EndTeleport()
-    {
-
-    }
-
     public void StartBlokSpel()
     {
+        // по аналогии с StaartAttacSpell
         audioSource.BlockSoundPlay();
     }
     public void EndBlokSpel()
     {
-
+        // по аналогии с EndAttacSpell
     }
 
     IEnumerator WaitAttackAnimation()
@@ -183,7 +183,11 @@ public class CharacterAnimations : MonoBehaviour
         yield return new WaitForSeconds(attackAnimTime);
         AttackAnimEnd();
     }
-
+    IEnumerator WaitSpellAttackAnimation()
+    {
+        yield return new WaitForSeconds(attackAnimTime);
+        EndAttacSpell();
+    }
     IEnumerator WaitPickUpAnimation()
     {
         yield return new WaitForSeconds(pickUpAnimTime);
