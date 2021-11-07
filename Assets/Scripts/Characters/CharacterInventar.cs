@@ -12,10 +12,9 @@ public class CharacterInventar : MonoBehaviour
     public SecondWeapon currentSecondWeapon;
     [SerializeField]
     public Scroll currentScroll;
-    // Start is called before the first frame update
+
     void Start()
     {
-        //if(currentWeapon)
         if (currentWeapon)
         {
             currentWeapon = Instantiate(currentWeapon);

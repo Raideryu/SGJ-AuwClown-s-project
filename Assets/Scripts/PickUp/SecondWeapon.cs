@@ -4,15 +4,6 @@ using UnityEngine;
 
 public class SecondWeapon : PickableSub
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public int CDSecondWeapon = 5;
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }

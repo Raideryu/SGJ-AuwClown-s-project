@@ -10,9 +10,11 @@ public class BaseCharacter : MonoBehaviour
     float actionRange = 1, movingRange = 0.1f; //минимальное растояние до действия
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
-    //[SerializeField, Tooltip("время КД способности")]
+    [SerializeField, Tooltip("время КД способности")]
     float skillCDTime = 3;
 
+    public int damageAttackSpel;
+    public int damageProtectSpel;
 
     //ссылки на компоненты
     [HideInInspector]
@@ -26,7 +28,9 @@ public class BaseCharacter : MonoBehaviour
 
     CharacterAction currentAction = CharacterAction.None; // текущая задача
 
-    bool isSkill = false; // использует способность
+    bool attackSkillCD = false;
+    bool protectSKillCD = false;
+   
     bool isAttack = false; //атакует
     bool taskEnd;
     bool actionstarted = false;
@@ -60,37 +64,48 @@ public class BaseCharacter : MonoBehaviour
         if (!_target)
             currentAction = CharacterAction.None;
 
-        if (agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
+        if (agent.remainingDistance <= agent.stoppingDistance) // если растояние до цели меньше растояния действия
+        {
             /// тут если spellStarted и currentAction == что-то из: AttackSpel, ProtectSpel то вызвать соответствующий метод, иначе Action()
-            if(currentAction == CharacterAction.AttackSpel || currentAction == CharacterAction.ProtectSpel)
+            if (currentAction == CharacterAction.AttackSpel)
             {
                 //если spellStarted то вызывай дибо 
                 if (spellStarted)
                 {
-                    //то вызывай метод скила
+                    StartAttackSpel(); //то вызывай метод скила
                     spellStarted = false;
                 }
             }
-            Action();
+            else if (currentAction == CharacterAction.ProtectSpel)
+            {
+                if (spellStarted)
+                {
+                    StartProtectSpel(); //то вызывай метод скила
+                    spellStarted = false;
+                }
+            }
+            else
+                Action();
+        }
     }
 
     public virtual void MoveToWithAction(Vector3 targetPos, GameObject target)
-    { 
+    {
         if (target == this.gameObject || isDied) return; // проверка сам на себя или на смерть
-        
-        if(!target || target.tag == "Ground")
+
+        if (!target || target.tag == "Ground")
         {
             agent.stoppingDistance = movingRange;
             currentAction = CharacterAction.None;
-            
+
         }
-        else if(target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
+        else if (target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
         {
             agent.stoppingDistance = actionRange;
             currentAction = CharacterAction.Attack;
             _enemy = enemy;
         }
-        else if(target.TryGetComponent< PickableSub>(out PickableSub pick))
+        else if (target.TryGetComponent<PickableSub>(out PickableSub pick))
         {
             agent.stoppingDistance = movingRange;
             currentAction = CharacterAction.PickUp;
@@ -105,18 +120,30 @@ public class BaseCharacter : MonoBehaviour
 
         if (target && target.tag != "Ground")
         {
-           // taskEnd = false;
+            // taskEnd = false;
             _target = target;
             //actionstarted = true;
         }
         else _target = null;
-        
+
     }
     // должен вызываться из player input
-    public void InputSpel() // параметры тип скила 
+    public void InputSpel(bool isAttackSpel) // параметры тип скила 
     {
         /// если вызываемый скилл в кд, то reeturn
-
+        if (!isAttackSpel)
+        {
+            if (!protectSKillCD)
+            {
+                currentAction = CharacterAction.ProtectSpel;
+                protectSKillCD = true;
+            }
+            else if (!attackSkillCD)
+            {
+                currentAction = CharacterAction.AttackSpel;
+                attackSkillCD = true;
+            }
+        }
         // в зависимости от типа скила задаь
         /// curentAction -> AttackSpel, ProtectSpel
         spellStarted = true;
@@ -151,7 +178,7 @@ public class BaseCharacter : MonoBehaviour
                 StartPickUpObj(_pick);
                 actionstarted = false;
             }
-            
+
         }
     }
 
@@ -159,7 +186,7 @@ public class BaseCharacter : MonoBehaviour
     /// атаковать цель
     /// </summary>
     /// <param name="attackTarget">цель аттаки</param>
-     void Attack(BaseCharacter attackTarget)
+    void Attack(BaseCharacter attackTarget)
     {
         if (isAttack) return;
 
@@ -169,36 +196,63 @@ public class BaseCharacter : MonoBehaviour
     }
 
     // методы 1го скила: начало
-       
+
     public void StartAttackSpel()
     {
-        
         animations.StaartAttacSpell();
     }
     public void EndAttackSpel()
     {
         StartCoroutine(AttackSpelCD());
-        if(currentAction == CharacterAction.AttackSpel)
-        if (_enemy)
+        if (currentAction == CharacterAction.AttackSpel)
         {
-            // добавить модификатор урона скила
-            dd.GetDamageEnemy(_enemy);
+            if (_enemy)
+            {
+                currentAction = CharacterAction.Attack; //сбросить curentAction в Attack
+                damageAttackSpel = 20; // добавить модификатор урона скила
+                dd.GetDamageEnemy(_enemy);
+            }
+            else
+                currentAction = CharacterAction.None;
         }
-
-        //сбросить curentAction в Attack
-        currentAction = CharacterAction.AttackSpel;
     }
 
     IEnumerator AttackSpelCD()
     {
-        // нельзя юзать этот скил, пока не пройдет кд
-        yield return new WaitForSeconds(skillCDTime); // skillCDTime получать из inventar -> weapon ...
-
-        isSkill = false;
-        // снять запрет на повторное использование
+        yield return new WaitForSeconds(inventar.currentWeapon.CDWeapon); // skillCDTime получать из inventar -> weapon ...
+        attackSkillCD = false;
     }
     // методы 1го скила: конец
-    // аналогично для защитного скила
+
+    // методы 2го скила: начало
+    public void StartProtectSpel()
+    {
+        animations.StartProtectSpel();
+    }
+
+    public void EndProtectSpel()
+    {
+        StartCoroutine(ProtectSpelCD());
+        if (currentAction == CharacterAction.ProtectSpel)
+        {
+            if (_enemy)
+            {
+                currentAction = CharacterAction.Attack;
+                damageProtectSpel = 25;// добавить модификатор урона скила
+                dd.GetDamageEnemy(_enemy);
+            }
+            else
+                currentAction = CharacterAction.None;
+        }
+    }
+
+    IEnumerator ProtectSpelCD()
+    {
+        yield return new WaitForSeconds(inventar.currentSecondWeapon.CDSecondWeapon); // skillCDTime получать из inventar -> weapon ...
+        protectSKillCD = false;
+    }
+    // методы 2го скила: конец
+
 
     /// <summary>
     /// метод подбирания предмета 
@@ -212,18 +266,18 @@ public class BaseCharacter : MonoBehaviour
 
     }
 
-    // методы 1го скила: начало
     void PickUpEnd()
     {
         if (curentPicableTarget)
             inventar.PickUpSub(curentPicableTarget);
         curentPicableTarget = null;
     }
-   
-    
+
+
     public void TeleportToTarget(Vector3 moveTo)
     {
         transform.position = moveTo;
+        agent.SetDestination(moveTo);
         animations.StartTeleport();
         inventar.DestroySkroll();
     }
@@ -231,12 +285,12 @@ public class BaseCharacter : MonoBehaviour
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
-        
+
         if (_target && _target.GetComponent<BaseCharacter>())
         {
             dd.GetDamageEnemy(_target.GetComponent<BaseCharacter>());
         }
-       
+
         //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
     }
 
@@ -263,6 +317,6 @@ public class BaseCharacter : MonoBehaviour
 
     public enum CharacterAction
     {
-        None,Attack,PickUp, AttackSpel, ProtectSpel, Teleport
+        None, Attack, PickUp, AttackSpel, ProtectSpel, Teleport
     }
 }
