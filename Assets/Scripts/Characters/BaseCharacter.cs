@@ -28,7 +28,7 @@ public class BaseCharacter : MonoBehaviour
 
     bool attackSkillCD = false;
     bool protectSKillCD = false;
-   
+
     bool isAttack = false; //атакует
     bool taskEnd;
     bool actionstarted = false;
@@ -65,25 +65,25 @@ public class BaseCharacter : MonoBehaviour
         if (agent.remainingDistance <= agent.stoppingDistance) // если растояние до цели меньше растояния действия
         {
             /// тут если spellStarted и currentAction == что-то из: AttackSpel, ProtectSpel то вызвать соответствующий метод, иначе Action()
-            if (currentAction == CharacterAction.AttackSpel)
-            {
-                //если spellStarted то вызывай дибо 
-                if (spellStarted)
-                {
-                    StartAttackSpel(); //то вызывай метод скила
-                    spellStarted = false;
-                }
-            }
-            else if (currentAction == CharacterAction.ProtectSpel)
-            {
-                if (spellStarted)
-                {
-                    StartProtectSpel(); //то вызывай метод скила
-                    spellStarted = false;
-                }
-            }
-            else
-                Action();
+            //if (currentAction == CharacterAction.AttackSpel)
+            //{
+            //    //если spellStarted то вызывай дибо 
+            //    if (spellStarted)
+            //    {
+            //        StartAttackSpel(); //то вызывай метод скила
+            //        spellStarted = false;
+            //    }
+            //}
+            //else if (currentAction == CharacterAction.ProtectSpel)
+            //{
+            //    if (spellStarted)
+            //    {
+            //        StartProtectSpel(); //то вызывай метод скила
+            //        spellStarted = false;
+            //    }
+            //}
+            //else
+            Action();
         }
     }
 
@@ -134,17 +134,16 @@ public class BaseCharacter : MonoBehaviour
             if (!protectSKillCD)
             {
                 currentAction = CharacterAction.ProtectSpel;
+                StartProtectSpel(); //то вызывай метод скила
                 protectSKillCD = true;
             }
         }
         else if (!attackSkillCD)
         {
             currentAction = CharacterAction.AttackSpel;
+            StartAttackSpel(); //то вызывай метод скила
             attackSkillCD = true;
         }
-        // в зависимости от типа скила задаь
-        /// curentAction -> AttackSpel, ProtectSpel
-        spellStarted = true;
     }
     void Move(Vector3 target)
     {
@@ -201,7 +200,7 @@ public class BaseCharacter : MonoBehaviour
     }
     public void EndAttackSpel()
     {
-        StartCoroutine(AttackSpelCD());
+        StartCoroutine(AttackSpelCD(inventar.currentWeapon.CDWeapon));
         if (currentAction == CharacterAction.AttackSpel)
         {
             if (_enemy)
@@ -215,9 +214,9 @@ public class BaseCharacter : MonoBehaviour
         }
     }
 
-    IEnumerator AttackSpelCD()
+    IEnumerator AttackSpelCD(int time)
     {
-        yield return new WaitForSeconds(inventar.currentWeapon.CDWeapon); // skillCDTime получать из inventar -> weapon ...
+        yield return new WaitForSeconds(time); // skillCDTime получать из inventar -> weapon ...
         attackSkillCD = false;
     }
     // методы 1го скила: конец
@@ -230,7 +229,8 @@ public class BaseCharacter : MonoBehaviour
 
     public void EndProtectSpel()
     {
-        StartCoroutine(ProtectSpelCD());
+        if (!inventar.currentSecondWeapon) return;
+        StartCoroutine(ProtectSpelCD(inventar.currentSecondWeapon.CDSecondWeapon));
         if (currentAction == CharacterAction.ProtectSpel)
         {
             if (_enemy)
@@ -244,9 +244,9 @@ public class BaseCharacter : MonoBehaviour
         }
     }
 
-    IEnumerator ProtectSpelCD()
+    IEnumerator ProtectSpelCD(int time)
     {
-        yield return new WaitForSeconds(inventar.currentSecondWeapon.CDSecondWeapon); // skillCDTime получать из inventar -> weapon ...
+        yield return new WaitForSeconds(time); // skillCDTime получать из inventar -> weapon ...
         protectSKillCD = false;
     }
     // методы 2го скила: конец
@@ -269,12 +269,14 @@ public class BaseCharacter : MonoBehaviour
         if (curentPicableTarget)
             inventar.PickUpSub(curentPicableTarget);
         curentPicableTarget = null;
+        currentAction = CharacterAction.None;
     }
 
 
     public void TeleportToTarget(Vector3 moveTo)
     {
-        transform.position = moveTo;
+        //transform.position = moveTo;
+        transform.Translate(-moveTo + transform.position ,Space.Self);
         agent.SetDestination(moveTo);
         animations.StartTeleport();
         inventar.DestroySkroll();
