@@ -122,6 +122,8 @@ MonoBehaviour:
   movingRange: 0.1
   attackCDTime: 1
   agent: {fileID: 0}
+  damageAttackSpel: 0
+  damageProtectSpel: 0
   isDied: 0
 --- !u!114 &6871757586329204320
 MonoBehaviour:
@@ -181,8 +183,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd1cb72077a881441bfc5b7713f77265, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  healthPlayer: 10
-  maxHealthPlayer: 10
+  healthPlayer: 200
+  maxHealthPlayer: 200
   powerPlayer: 1
   agilityPlayer: 1
   staminaPlayer: 5
