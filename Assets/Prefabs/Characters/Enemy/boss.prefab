@@ -221,6 +221,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: HPBar
       objectReference: {fileID: 0}
+    - target: {fileID: 3957627517532814717, guid: 6c34d07dda0522d40aa2319546a57496, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 3957627518407909849, guid: 6c34d07dda0522d40aa2319546a57496, type: 3}
       propertyPath: m_Type
       value: 3

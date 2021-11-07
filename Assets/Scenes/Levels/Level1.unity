@@ -560,12 +560,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
+      propertyPath: bossPrefab
+      value: 
+      objectReference: {fileID: 5729509750623068131, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
+    - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
+      propertyPath: enemyPrefab
+      value: 
+      objectReference: {fileID: 3391830067948076034, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
+    - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
       propertyPath: playerPrefab
       value: 
       objectReference: {fileID: 7977710939920503552, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
     - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
+      propertyPath: finishRoomPrefab
+      value: 
+      objectReference: {fileID: 193846967154137103, guid: 508508be13fef3a4fbbc67b916fb824d, type: 3}
+    - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
       propertyPath: mainPathRoomsCount
-      value: 10
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3536634455615778351, guid: 37137e9cdffc7114f8cbdc7b55dbf464, type: 3}
       propertyPath: BigRoomPrefabs.Array.size
