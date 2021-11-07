@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Linq;
 
 public class Chunk : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class Chunk : MonoBehaviour
 
     [HideInInspector]
     private List<ExitInfo> exitsInfo = new List<ExitInfo>();
+
+    public bool isOpen = false; 
 
     public List<ExitInfo> ExitsInfo
     {
@@ -33,6 +36,25 @@ public class Chunk : MonoBehaviour
         }
         
     }
+    public List<Enemy> currentEnemys = new List<Enemy>();
+    public void SpawnEnemys(GameObject enemyPrefab)
+    {
+        currentEnemys.Clear();
+        List<PatrolPoints> patrolsP = GetComponentsInChildren<PatrolPoints>().ToList();
+        
+        foreach(PatrolPoints point in patrolsP)
+        {
+            Enemy enemy = Instantiate(enemyPrefab, point.transform.position, point.transform.rotation).GetComponent<Enemy>();
+            enemy.SetPatrolsPoints(patrolsP);
+            currentEnemys.Add(enemy);
+        }
+    }
+
+    public void SetOpen()
+    {
+        // открыть двери
+    }
+
 }
 public class ExitInfo
 {
