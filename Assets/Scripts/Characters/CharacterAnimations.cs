@@ -107,7 +107,7 @@ public class CharacterAnimations : MonoBehaviour
         isAttack = true;
         StartCoroutine(WaitAttackAnimation());
 
-
+        audioSource.SimpleAttackSoundPlay();
     }
 
     public void ResetAnim()
@@ -137,7 +137,7 @@ public class CharacterAnimations : MonoBehaviour
 
         audioSource.PickUpSound();
 
-        audioSource.SimpleAttackSoundPlay();
+        //audioSource.SimpleAttackSoundPlay();
     }
 
     public void PickUpAnimEnd()
