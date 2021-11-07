@@ -37,9 +37,10 @@ public class PlayerInput : MonoBehaviour
         {
             isTpAction = true;
         }
+
         if (isTpAction)
         {
-            if (Input.GetMouseButton(0)) 
+            if (Input.GetMouseButton(0))
             {
                 RaycastHit p_hit;
                 if (rayMousePosition("Ground", out p_hit))
@@ -47,19 +48,20 @@ public class PlayerInput : MonoBehaviour
                     character.TeleportToTarget(p_hit.collider.transform.position);
                     isTpAction = false;
                     //selectCircle.transform.position = new Vector3(p_hit.point.x, p_hit.point.y + 0.5f, p_hit.point.z);
-                   // selectCircle.SetActive(true);
+                    //selectCircle.SetActive(true);
+                }
+                if (Input.GetMouseButton(1))
+                {
+                    isTpAction = false;
+                    //selectCircle.SetActive(false);
                 }
             }
-            if (Input.GetKeyDown(KeyCode.Escape))
+            else
             {
-                isTpAction = false;
                 //selectCircle.SetActive(false);
             }
         }
-        else
-            //selectCircle.SetActive(false);
         
-
         /// сделать проверку проверка на налицие соответствующего оружия из inventar
         /// и вызвать то basecharacter.InputSpel(spel type) 
         /// иначе ничего не делать
@@ -113,16 +115,16 @@ public class PlayerInput : MonoBehaviour
                 return;
             }
         }
-    }
-    private bool rayMousePosition(string _tag, out RaycastHit p_hit)
+}
+private bool rayMousePosition(string _tag, out RaycastHit p_hit)
+{
+    Ray p_ray;
+    p_ray = mainCamera.ScreenPointToRay(Input.mousePosition);
+    if (Physics.Raycast(p_ray, out p_hit) && p_hit.collider.CompareTag(_tag))
     {
-        Ray p_ray;
-        p_ray = mainCamera.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(p_ray, out p_hit) && p_hit.collider.CompareTag(_tag))
-        {
-            return true;
-        }
-        return false;
+        return true;
     }
+    return false;
+}
 }
 
