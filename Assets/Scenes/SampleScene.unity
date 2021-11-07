@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: moveSpots.Array.data[3]
       value: 
       objectReference: {fileID: 825737544}
+    - target: {fileID: 4850869741957791797, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: m_PresetInfoIsWorld
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5865016760062704643, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
@@ -1124,6 +1128,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5434856550299697751, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: MaxHealthPlayer
+      value: 100
+      objectReference: {fileID: 0}
+    - target: {fileID: 5434856550299697751, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
+      propertyPath: maxHealthPlayer
       value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 7349124147735546298, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}

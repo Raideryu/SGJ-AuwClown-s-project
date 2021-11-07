@@ -119,6 +119,8 @@ public class CharacterStats : MonoBehaviour
     {
         if (gameObject.tag == "Player")
             characterHUD = FindObjectOfType<UIDrawer>();
+        else if (gameObject.tag == "Enemy")
+            characterHUD = GetComponentInChildren<HPBar>();
 
         character = GetComponent<BaseCharacter>();
 
