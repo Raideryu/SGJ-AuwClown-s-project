@@ -16,7 +16,21 @@ public class CharacterInventar : MonoBehaviour
     void Start()
     {
         //if(currentWeapon)
-
+        if (currentWeapon)
+        {
+            currentWeapon = Instantiate(currentWeapon);
+            currentWeapon.PickUp(rightArm);
+        }
+        if (currentSecondWeapon)
+        {
+            currentSecondWeapon = Instantiate(currentSecondWeapon);
+            currentSecondWeapon.PickUp(leftArm);
+        }
+        if (currentScroll)
+        {
+            currentScroll = Instantiate(currentScroll);
+            currentScroll.PickUp(spine);
+        }
     }
 
     public void PickUpSub(PickableSub pickable)

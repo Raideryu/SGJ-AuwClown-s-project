@@ -119,7 +119,7 @@ public class BaseCharacter : MonoBehaviour
         if (isAttack) return;
 
 
-
+        isAttack = true;
         // вызвать анимацию аттаки
         animations.StartAttack();
     }
@@ -154,7 +154,7 @@ public class BaseCharacter : MonoBehaviour
     {
         StartCoroutine(AttackCD());
         
-        if (_target.GetComponent<BaseCharacter>())
+        if (_target && _target.GetComponent<BaseCharacter>())
         {
             dd.GetDamageEnemy(_target.GetComponent<BaseCharacter>());
         }

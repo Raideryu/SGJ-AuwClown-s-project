@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class UIDrawer : MonoBehaviour
+public class UIDrawer : MonoBehaviour , ICharacterHUD
 {
     public int maxHP;
     public int actualHP;
@@ -57,14 +57,24 @@ public class UIDrawer : MonoBehaviour
         maxStamina = maxstam;
         if (stamina > maxStamina) stamina = maxStamina;
         CheckStam();
-
-
     }
     public void CheckStam()
     {
         float newScale = (float)stamina / (float)maxStamina;
         staminaBar.fillAmount = newScale;
     }
+
+
+    public void DrawPower(int stamina)
+    {
+        // обновить тест с числов текущей силы персонажа
+    }
+
+    public void DrawAgility(int agility)
+    {
+        // обновить тест с числов текущей ловкости персонажа
+    }
+
 
     public void IsSkillsActive(int numSkill, bool setActive) 
     {
@@ -81,4 +91,6 @@ public class UIDrawer : MonoBehaviour
                 break;
         }
     }
+
+   
 }

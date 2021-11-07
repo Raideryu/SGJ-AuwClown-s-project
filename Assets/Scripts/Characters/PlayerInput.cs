@@ -25,7 +25,8 @@ public class PlayerInput : MonoBehaviour
 
             foreach (RaycastHit hit in hits)
             {
-                if(hit.collider.tag == "Ground")
+                if (hit.collider.gameObject.tag == "UI") break;
+                if(hit.collider.tag == "Ground" || hit.collider.tag == "Enemy" || hit.collider.tag == "PickUp")
                 {
                     character.MoveToWithAction(hit.point, hit.collider.gameObject);
                     break;
