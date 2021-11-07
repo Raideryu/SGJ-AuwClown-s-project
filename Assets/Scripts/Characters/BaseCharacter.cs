@@ -10,8 +10,9 @@ public class BaseCharacter : MonoBehaviour
     float actionRange = 1, movingRange = 0.1f; //минимальное растояние до действия
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
+    //[SerializeField, Tooltip("время КД способности")]
+    //float skillCDTime = 3;
 
-    
 
     //ссылки на компоненты
     [HideInInspector]
@@ -25,6 +26,7 @@ public class BaseCharacter : MonoBehaviour
 
     CharacterAction currentAction = CharacterAction.None; // текущая задача
 
+    bool isSkill = false; // использует способность
     bool isAttack = false; //атакует
     bool taskEnd;
     bool actionstarted = false;
@@ -149,6 +151,15 @@ public class BaseCharacter : MonoBehaviour
         animations.StartAttack();
     }
 
+    //protected virtual void Skill(BaseCharacter attackTarget)
+    //{
+    //    if (isSkill) return;
+
+    //    isSkill = true;
+    //    // вызвать анимацию способности
+        
+    //}
+
 
     /// <summary>
     /// метод подбирания предмета 
@@ -168,6 +179,23 @@ public class BaseCharacter : MonoBehaviour
             inventar.PickUpSub(curentPicableTarget);
         curentPicableTarget = null;
     }
+    //void SkillEnd()
+    //{
+    //    StartCoroutine(SkillCD());
+
+    //    if (_target && _target.GetComponent<BaseCharacter>())
+    //    {
+    //        dd.GetDamageEnemy(_target.GetComponent<BaseCharacter>());
+    //    }
+
+    //    //  Debug.Log("я: " + gameObject.name + " ударил цель: " + _target.gameObject.name);
+    //}
+
+    //IEnumerator SkillCD()
+    //{
+    //    yield return new WaitForSeconds(skillCDTime);
+    //    isSkill = false;
+    //}
     void AttackEnd()
     {
         StartCoroutine(AttackCD());
