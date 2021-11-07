@@ -286,6 +286,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 778771722160490247, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: m_Speed
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 778771722160490247, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: m_AngularSpeed
+      value: 6000
+      objectReference: {fileID: 0}
     - target: {fileID: 843922816797315836, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: spine
       value: 
@@ -306,21 +314,29 @@ PrefabInstance:
       propertyPath: powerPlayer
       value: 6
       objectReference: {fileID: 0}
+    - target: {fileID: 2254076609391253960, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: healthPlayer
+      value: 250
+      objectReference: {fileID: 0}
+    - target: {fileID: 2254076609391253960, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: maxHealthPlayer
+      value: 250
+      objectReference: {fileID: 0}
     - target: {fileID: 3591971440974107173, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_RootOrder
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3591971440974107173, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 2.8705347
+      value: 7.66
       objectReference: {fileID: 0}
     - target: {fileID: 3591971440974107173, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -2.1476336
+      value: 0.0770669
       objectReference: {fileID: 0}
     - target: {fileID: 3591971440974107173, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 1.8273907
+      value: 2.557764
       objectReference: {fileID: 0}
     - target: {fileID: 3591971440974107173, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_LocalRotation.w
@@ -357,6 +373,14 @@ PrefabInstance:
     - target: {fileID: 4220697836958533791, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_TagString
       value: Enemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299840154661550042, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: actionRange
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5299840154661550042, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
+      propertyPath: movingRange
+      value: 0.01
       objectReference: {fileID: 0}
     - target: {fileID: 5514047503489962758, guid: bfde9ef7a8303214ebac50685f3e8339, type: 3}
       propertyPath: m_IsActive
