@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using System.Linq;
+using System;
 
 [RequireComponent(typeof(BaseCharacter))]
 public class PlayerInput : MonoBehaviour
@@ -23,23 +25,34 @@ public class PlayerInput : MonoBehaviour
         {
             RaycastHit[] hits = Physics.RaycastAll(mainCamera.ScreenPointToRay(Input.mousePosition));
 
-            foreach (RaycastHit hit in hits)
+            List<RaycastHit> hitsList = hits.ToList();
+
+
+            if (hitsList.Exists(e => e.collider.gameObject.tag == "UI"))
             {
-                if (hit.collider.gameObject.tag == "UI") break;
-                if(hit.collider.tag == "Ground" || hit.collider.tag == "Enemy" || hit.collider.tag == "PickUp")
-                {
-                    character.MoveToWithAction(hit.point, hit.collider.gameObject);
-                    break;
-                }                
+                return;
             }
+            if (hitsList.Exists(e => e.collider.gameObject.tag == "Enemy"))
+            {
+                RaycastHit hit = hitsList.Find(e => e.collider.gameObject.tag == "Enemy");
+                character.MoveToWithAction(hit.point, hit.collider.gameObject);
+                return;
+            }
+            if (hitsList.Exists(e => e.collider.gameObject.tag == "PickUp"))
+            {
+                RaycastHit hit = hitsList.Find(e => e.collider.gameObject.tag == "PickUp");
+                character.MoveToWithAction(hit.point, hit.collider.gameObject);
+                return;
+            }
+            if (hitsList.Exists(e => e.collider.gameObject.tag == "Ground"))
+            {
+                RaycastHit hit = hitsList.Find(e => e.collider.gameObject.tag == "Ground");
+                character.MoveToWithAction(hit.point, hit.collider.gameObject);
+                return;
+            }
+           
 
-            // RaycastHit hit;
-            //if(Physics.Raycast(mainCamera.ScreenPointToRay(Input.mousePosition), out hit))
-            //{
-            //    // второй параметр отвечает за текущее действие
-            //    character.MoveToWithAction(hit.point, hit.collider.gameObject);
-
-            //}
+            
         }
     }
 }

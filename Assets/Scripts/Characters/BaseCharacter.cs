@@ -31,7 +31,8 @@ public class BaseCharacter : MonoBehaviour
     
     // текущая цель 
     private GameObject _target;
-
+    private BaseCharacter _enemy;
+    private PickableSub _pick;
     void Awake()
     {
         agent = GetComponent<NavMeshAgent>();
@@ -53,7 +54,9 @@ public class BaseCharacter : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (!_target || isDied || currentAction == CharacterAction.None) return; // если нет цели или недошел до нее 
+        if (isDied || currentAction == CharacterAction.None) return; // если нет цели или недошел до нее 
+        if (!_target)
+            currentAction = CharacterAction.None;
 
         if (agent.remainingDistance <= agent.stoppingDistance ) // если растояние до цели меньше растояния действия
             Action();
@@ -65,31 +68,34 @@ public class BaseCharacter : MonoBehaviour
         
         if(!target || target.tag == "Ground")
         {
-            currentAction = CharacterAction.None;
             agent.stoppingDistance = movingRange;
+            currentAction = CharacterAction.None;
+            
         }
         else if(target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
         {
-            currentAction = CharacterAction.Attack;
             agent.stoppingDistance = actionRange;
+            currentAction = CharacterAction.Attack;
+            _enemy = enemy;
         }
         else if(target.TryGetComponent< PickableSub>(out PickableSub pick))
         {
-            currentAction = CharacterAction.PickUp;
             agent.stoppingDistance = movingRange;
+            currentAction = CharacterAction.PickUp;
+            _pick = pick;
+            actionstarted = true;
         }
 
-       
-        
         if (_target != target)
             animations.ResetAnim();
 
         Move(targetPos);
+
         if (target && target.tag != "Ground")
         {
-            taskEnd = false;
+           // taskEnd = false;
             _target = target;
-            actionstarted = true;
+            //actionstarted = true;
         }
         else _target = null;
         
@@ -104,27 +110,29 @@ public class BaseCharacter : MonoBehaviour
 
     protected virtual void Action()
     {
-        
         // атаковать
-        if (_target.TryGetComponent<BaseCharacter>(out BaseCharacter enemy))
+        if (currentAction == CharacterAction.Attack)
         {
-            if (enemy.isDied)
+            if (_enemy.isDied)
             {
                 _target = null;
                 return;
             }
-            Vector3 lookRot = transform.position;
-            lookRot.x = enemy.transform.position.x;
-            lookRot.z = enemy.transform.position.z;
+
+            Vector3 lookRot = _enemy.transform.position;
+            lookRot.y = transform.position.y;
             transform.LookAt(lookRot);
 
-            Attack(enemy);
+            Attack(_enemy);
         }
-        else if (_target.TryGetComponent<PickableSub>(out PickableSub pick) && !taskEnd && actionstarted)
+        else if (currentAction == CharacterAction.PickUp && actionstarted)
         {
-            if (pick != curentPicableTarget)
-            StartPickUpObj(pick);
-            actionstarted = false; 
+            if (_pick != curentPicableTarget)
+            {
+                StartPickUpObj(_pick);
+                actionstarted = false;
+            }
+            
         }
     }
 
@@ -135,7 +143,6 @@ public class BaseCharacter : MonoBehaviour
     protected virtual void Attack(BaseCharacter attackTarget)
     {
         if (isAttack) return;
-
 
         isAttack = true;
         // вызвать анимацию аттаки
@@ -149,17 +156,10 @@ public class BaseCharacter : MonoBehaviour
     /// <param name="pickUp">сам предмет</param>
     protected virtual void StartPickUpObj(PickableSub pickUp)
     {
-
-        //Vector3 lookRot = transform.position;
-        //lookRot.x = pickUp.transform.position.x;
-        //lookRot.z = pickUp.transform.position.z;
-        //transform.LookAt(lookRot);
-        taskEnd = true;
+        //taskEnd = true;
         animations.StartPickUpAnim();
         curentPicableTarget = pickUp;
 
-        // подобрать предмет
-        // Debug.Log("я: " + gameObject.name + " подбираю: " + pickUp.gameObject.name);
     }
 
     void PickUpEnd()

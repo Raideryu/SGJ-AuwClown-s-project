@@ -158,6 +158,10 @@ PrefabInstance:
       propertyPath: moveSpots.Array.data[3]
       value: 
       objectReference: {fileID: 825737544}
+    - target: {fileID: 4850869741957791787, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4850869741957791797, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: m_PresetInfoIsWorld
       value: 1
@@ -213,6 +217,10 @@ PrefabInstance:
     - target: {fileID: 6641470198364417316, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: m_Name
       value: Enemy 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6641470198364417316, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6641470198364417316, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: m_TagString

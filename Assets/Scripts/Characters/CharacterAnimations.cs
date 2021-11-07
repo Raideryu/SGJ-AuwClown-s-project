@@ -38,16 +38,13 @@ public class CharacterAnimations : MonoBehaviour
         charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
         charAnimator.SetTrigger("ResetAnim");
-        //CreateAttackAnimEndEvent();
+  
     }
 
     float Speed(Vector3 newPoint)
     {
         lastPointsSpeed.Add(Vector3.Distance(newPoint, lastPositiont)/Time.fixedDeltaTime);
 
-        //List<float> aaa = lastPointsSpeed.GetRange(1, lastPointsSpeed.Count - 2);
-        //lastPointsSpeed.Clear();
-        //lastPointsSpeed.AddRange(aaa)
         lastPointsSpeed.Remove(lastPointsSpeed[0]);
         lastPositiont = newPoint;
         float speed = 0;
