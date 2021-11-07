@@ -14,8 +14,19 @@ public class GameManager : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Escape))
             Pause();
-        
-     
+
+
+        if (currentChunk && !currentChunk.isOpen)
+        {
+            foreach(Enemy enemy in currentChunk.currentEnemys)
+            {
+                if (!enemy.GetComponent<BaseCharacter>().isDied)
+                    return;
+            }
+            //если все враги померли 
+
+
+        }
 
     }
 
