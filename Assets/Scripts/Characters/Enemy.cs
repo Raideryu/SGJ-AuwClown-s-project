@@ -30,7 +30,13 @@ public class Enemy : MonoBehaviour
         player = GameObject.FindGameObjectWithTag("Player").transform;
         if (!player) Debug.LogError("отсутствует сущность с тегом Player");
 
-        if (moveSpots.Length > 0)
+        ///проверка на null из префаба
+        foreach (Transform tr in moveSpots)
+        {
+            if (!tr) return;
+        }
+
+            if (moveSpots.Length > 0)
         {
             currentSpot = Random.Range(0, moveSpots.Length - 1);
         }
@@ -38,8 +44,22 @@ public class Enemy : MonoBehaviour
         {
             moveSpots = new Transform[1] { transform };
         }
+
+        //Object[] obj = FindObjectsOfType<PatrolPoints>();
+        
         StartPatrol();
 
+    }
+
+    public void SetPatrolsPoints(List<PatrolPoints> points)
+    {
+        List<Transform> transforms = new List<Transform>();
+        foreach (PatrolPoints point in points)
+            transforms.Add(point.transform);
+
+        moveSpots = transforms.ToArray();
+
+        StartPatrol();
     }
 
     void FixedUpdate()

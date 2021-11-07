@@ -11,8 +11,6 @@ public class BaseCharacter : MonoBehaviour
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
 
-    public int damageAttackSpel;
-    public int damageProtectSpel;
 
     //ссылки на компоненты
     [HideInInspector]
@@ -21,6 +19,9 @@ public class BaseCharacter : MonoBehaviour
     private CharacterInventar inventar;
     private DamageDiller dd;
     private PickableSub curentPicableTarget;
+
+    public int damageAttackSpel;
+    public int damageProtectSpel;
 
     public bool isDied = false; // перс умер
 
@@ -131,18 +132,21 @@ public class BaseCharacter : MonoBehaviour
         /// если вызываемый скилл в кд, то reeturn
         if (!isAttackSpel)
         {
-            if (!protectSKillCD)
+            if(!protectSKillCD)
             {
                 currentAction = CharacterAction.ProtectSpel;
                 StartProtectSpel(); //то вызывай метод скила
-                protectSKillCD = true;
             }
+
         }
-        else if (!attackSkillCD)
+        else
         {
-            currentAction = CharacterAction.AttackSpel;
-            StartAttackSpel(); //то вызывай метод скила
-            attackSkillCD = true;
+            if(!attackSkillCD)
+            {
+                currentAction = CharacterAction.AttackSpel;
+                StartAttackSpel(); //то вызывай метод скила
+            }
+
         }
     }
     void Move(Vector3 target)
@@ -216,8 +220,13 @@ public class BaseCharacter : MonoBehaviour
 
     IEnumerator AttackSpelCD(int time)
     {
+        attackSkillCD = true;
+        protectSKillCD = true;
         yield return new WaitForSeconds(time); // skillCDTime получать из inventar -> weapon ...
+        protectSKillCD= false;
+
         attackSkillCD = false;
+        
     }
     // методы 1го скила: конец
 
@@ -246,7 +255,11 @@ public class BaseCharacter : MonoBehaviour
 
     IEnumerator ProtectSpelCD(int time)
     {
+        protectSKillCD = true;
+        attackSkillCD = true;
         yield return new WaitForSeconds(time); // skillCDTime получать из inventar -> weapon ...
+        attackSkillCD = false;
+
         protectSKillCD = false;
     }
     // методы 2го скила: конец
@@ -276,7 +289,7 @@ public class BaseCharacter : MonoBehaviour
     public void TeleportToTarget(Vector3 moveTo)
     {
         //transform.position = moveTo;
-        transform.Translate(-moveTo + transform.position ,Space.Self);
+        transform.Translate(-moveTo + transform.position, Space.Self);
         agent.SetDestination(moveTo);
         animations.StartTeleport();
         inventar.DestroySkroll();
