@@ -148,5 +148,7 @@ public class CharacterStats : MonoBehaviour
     {
         if (isDead) return;
         character.Die();
+
+        GameManager.Instance.GameOver();
     }
 }
