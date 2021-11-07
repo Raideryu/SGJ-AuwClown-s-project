@@ -11,7 +11,8 @@ public class CharacterAnimations : MonoBehaviour
     int speedLerp = 10;
     Animator charAnimator;
     BaseCharacter character;
-    
+    CharacterAudioSource audioSource;
+
     Vector3 lastPositiont;
     List<float> lastPointsSpeed = new List<float>();
 
@@ -25,11 +26,12 @@ public class CharacterAnimations : MonoBehaviour
     //        return Vector3.Distance(lastPosition, transform.position) / Time.fixedDeltaTime; 
     //    } 
     //}
-    
+
     void Start()
     {
-        
-        for(int i=0; i < speedLerp; i++)
+        audioSource = GetComponent<CharacterAudioSource>();
+
+        for (int i = 0; i < speedLerp; i++)
         {
             lastPointsSpeed.Add(0);
         }
@@ -38,12 +40,12 @@ public class CharacterAnimations : MonoBehaviour
         charAnimator = GetComponentInChildren<Animator>();//GetComponent<Animator>();
         character = GetComponent<BaseCharacter>();
         charAnimator.SetTrigger("ResetAnim");
-  
+
     }
 
     float Speed(Vector3 newPoint)
     {
-        lastPointsSpeed.Add(Vector3.Distance(newPoint, lastPositiont)/Time.fixedDeltaTime);
+        lastPointsSpeed.Add(Vector3.Distance(newPoint, lastPositiont) / Time.fixedDeltaTime);
 
         lastPointsSpeed.Remove(lastPointsSpeed[0]);
         lastPositiont = newPoint;
@@ -54,9 +56,6 @@ public class CharacterAnimations : MonoBehaviour
         }
 
         return speed / lastPointsSpeed.Count;
-        
-        
-       
     }
 
     void FixedUpdate()
@@ -64,13 +63,14 @@ public class CharacterAnimations : MonoBehaviour
         float speed = Speed(transform.position);
         float speedPU = Mathf.Clamp(speed / character.agent.speed, 0, 1);
         charAnimator.SetFloat("Speed", speedPU);
+        audioSource.SpeedChange(speedPU);
     }
 
     public void DieAnim() // смерть
     {
         charAnimator.ResetTrigger("Respawn");
         charAnimator.SetTrigger("Die");
-        
+        audioSource.DeathSoundPlay();
     }
 
     public void SundayAnim() //воскрешение 
@@ -87,7 +87,7 @@ public class CharacterAnimations : MonoBehaviour
 
         for (int i = 0; i < clips.Length; i++)
         {
-            
+
             if (clips[i].name == name)
             {
                 time = clips[i].length;
@@ -106,6 +106,8 @@ public class CharacterAnimations : MonoBehaviour
         charAnimator.SetTrigger("StartAttack");
         isAttack = true;
         StartCoroutine(WaitAttackAnimation());
+
+
     }
 
     public void ResetAnim()
@@ -126,24 +128,56 @@ public class CharacterAnimations : MonoBehaviour
     }
     public void StartPickUpAnim()
     {
-        pickUpAnimTime = AnimTime(pickingUpAnimationName)/8;
+        pickUpAnimTime = AnimTime(pickingUpAnimationName) / 8;
 
         // анимация подбора
         charAnimator.SetTrigger("PickUp");
 
         StartCoroutine(WaitPickUpAnimation());
-        
+
+        audioSource.PickUpSound();
+
+        audioSource.SimpleAttackSoundPlay();
     }
 
     public void PickUpAnimEnd()
     {
         charAnimator.ResetTrigger("PickUp");
-        
+
         if (OnPickUpEnd != null)
             OnPickUpEnd.Invoke();
     }
 
-    
+    public void StaartAttacSpell()
+    {
+        audioSource.SpecialAttackSoundPlay();
+    }
+
+    public void EndAttacSpell()
+    {
+        // конец супер атаки
+
+    }
+
+    public void StartTeleport()
+    {
+        audioSource.TeleportSoundPlay();
+    }
+
+    public void EndTeleport()
+    {
+
+    }
+
+    public void StartBlokSpel()
+    {
+        audioSource.BlockSoundPlay();
+    }
+    public void EndBlokSpel()
+    {
+
+    }
+
     IEnumerator WaitAttackAnimation()
     {
         yield return new WaitForSeconds(attackAnimTime);
