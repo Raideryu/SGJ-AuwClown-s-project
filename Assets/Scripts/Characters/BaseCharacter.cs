@@ -10,8 +10,6 @@ public class BaseCharacter : MonoBehaviour
     float actionRange = 1, movingRange = 0.1f; //минимальное растояние до действия
     [SerializeField, Tooltip("время КД атаки")]
     float attackCDTime = 1;
-    [SerializeField, Tooltip("время КД способности")]
-    float skillCDTime = 3;
 
     public int damageAttackSpel;
     public int damageProtectSpel;
@@ -138,11 +136,11 @@ public class BaseCharacter : MonoBehaviour
                 currentAction = CharacterAction.ProtectSpel;
                 protectSKillCD = true;
             }
-            else if (!attackSkillCD)
-            {
-                currentAction = CharacterAction.AttackSpel;
-                attackSkillCD = true;
-            }
+        }
+        else if (!attackSkillCD)
+        {
+            currentAction = CharacterAction.AttackSpel;
+            attackSkillCD = true;
         }
         // в зависимости от типа скила задаь
         /// curentAction -> AttackSpel, ProtectSpel
