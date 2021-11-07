@@ -199,6 +199,8 @@ MonoBehaviour:
   - {fileID: 8470700458423799495}
   - {fileID: 8904237725607899355}
   isRoom: 1
+  isOpen: 0
+  currentEnemys: []
 --- !u!1 &9188889734899459614
 GameObject:
   m_ObjectHideFlags: 0

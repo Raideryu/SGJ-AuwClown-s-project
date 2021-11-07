@@ -16,8 +16,10 @@ public class CharacterAnimations : MonoBehaviour
     Vector3 lastPositiont;
     List<float> lastPointsSpeed = new List<float>();
 
-    private float attackAnimTime = 1;
-    private float pickUpAnimTime = 1;
+    private float attackAnimTime = 1.5f;
+    private float pickUpAnimTime = 3f;
+    private float attackSpelTime = 5;
+    private float protectSpelTime = 2;
     bool isAttack = false;
     //public float Speed
     //{ get 
@@ -172,7 +174,7 @@ public class CharacterAnimations : MonoBehaviour
         audioSource.BlockSoundPlay();
         charAnimator.SetTrigger("StartSpelProtect");
         //charAnimator.SetTrigger("StartAttack");
-        StartCoroutine(WaitSpellAttackAnimation());
+        StartCoroutine(WaitSpellProtectAnimation());
     }
     public void EndProtectSpel ()
     {
@@ -186,12 +188,12 @@ public class CharacterAnimations : MonoBehaviour
     }
     IEnumerator WaitSpellAttackAnimation()
     {
-        yield return new WaitForSeconds(attackAnimTime);
+        yield return new WaitForSeconds(attackSpelTime);
         EndAttacSpell();
     }
     IEnumerator WaitSpellProtectAnimation()
     {
-        yield return new WaitForSeconds(attackAnimTime);
+        yield return new WaitForSeconds(protectSpelTime);
         EndProtectSpel();
     }
     IEnumerator WaitPickUpAnimation()

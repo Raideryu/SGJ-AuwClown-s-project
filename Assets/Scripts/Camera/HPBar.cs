@@ -43,8 +43,12 @@ public class HPBar : MonoBehaviour, ICharacterHUD
 
         if (BarImage)
         {
-            hpBarCanvas.gameObject.SetActive(true);//BarImage.gameObject.SetActive(true);
-            StartCoroutine(HideCanvas());
+            if (hpBarCanvas)
+            {
+                hpBarCanvas.gameObject.SetActive(true);//BarImage.gameObject.SetActive(true);
+                StartCoroutine(HideCanvas());
+            }
+            
         }
        
     }

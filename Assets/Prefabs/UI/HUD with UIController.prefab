@@ -39,17 +39,13 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 8395785090990019998}
     m_Modifications:
-    - target: {fileID: 6168435737258350065, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
-      propertyPath: m_TagString
-      value: UI
+    - target: {fileID: 2412013694879894848, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
+      propertyPath: m_Color.a
+      value: 0.22745098
       objectReference: {fileID: 0}
-    - target: {fileID: 6168435737289778673, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
-      propertyPath: m_TagString
-      value: UI
-      objectReference: {fileID: 0}
-    - target: {fileID: 6168435738281877252, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
-      propertyPath: m_TagString
-      value: UI
+    - target: {fileID: 5796670206566925654, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
+      propertyPath: m_Color.a
+      value: 0.22745098
       objectReference: {fileID: 0}
     - target: {fileID: 6168435738764701665, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
       propertyPath: m_Pivot.x
@@ -139,9 +135,9 @@ PrefabInstance:
       propertyPath: m_Name
       value: UI HUD
       objectReference: {fileID: 0}
-    - target: {fileID: 6168435738764701669, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
-      propertyPath: m_TagString
-      value: Untagged
+    - target: {fileID: 7521461540636158882, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
+      propertyPath: m_Color.a
+      value: 0.22745098
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f86a6d9380cb257418f8f33b0225d462, type: 3}
@@ -287,6 +283,14 @@ PrefabInstance:
       propertyPath: skillOnE.Array.data[1]
       value: 
       objectReference: {fileID: 7667185173348871743}
+    - target: {fileID: 3092313789435348381, guid: c8c1bf1852134b04da5e730bf88f785f, type: 3}
+      propertyPath: skillOnQ.Array.data[0]
+      value: 
+      objectReference: {fileID: 1343711541379542787}
+    - target: {fileID: 3092313789435348381, guid: c8c1bf1852134b04da5e730bf88f785f, type: 3}
+      propertyPath: skillOnQ.Array.data[1]
+      value: 
+      objectReference: {fileID: 732041639992879008}
     - target: {fileID: 3092313789435348381, guid: c8c1bf1852134b04da5e730bf88f785f, type: 3}
       propertyPath: skillOnW.Array.data[0]
       value: 
