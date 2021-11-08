@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.4465782, g: 0.49641252, b: 0.5748167, a: 1}
+  m_IndirectSpecularColor: {r: 0.44657874, g: 0.49641258, b: 0.5748172, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -251,8 +251,16 @@ PrefabInstance:
       value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 8787021075595574387, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: healthPlayer
+      value: 50
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787021075595574387, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
       propertyPath: MaxHealthPlayer
       value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8787021075595574387, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
+      propertyPath: maxHealthPlayer
+      value: 50
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dca647734dd4b93468c0ad17c7e3a6ca, type: 3}
@@ -383,7 +391,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8297938104507755750, guid: c2077b8d4b1eb63479c5af36e75cb7d3, type: 3}
       propertyPath: m_RootOrder
-      value: 20
+      value: 21
       objectReference: {fileID: 0}
     - target: {fileID: 8297938104507755750, guid: c2077b8d4b1eb63479c5af36e75cb7d3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -704,6 +712,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: boss
       objectReference: {fileID: 0}
+    - target: {fileID: 6571425236151717392, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
+      propertyPath: moveSpots.Array.data[0]
+      value: 
+      objectReference: {fileID: 931585178}
+    - target: {fileID: 6571425236151717392, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
+      propertyPath: moveSpots.Array.data[1]
+      value: 
+      objectReference: {fileID: 637530116}
+    - target: {fileID: 6571425236151717392, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
+      propertyPath: moveSpots.Array.data[2]
+      value: 
+      objectReference: {fileID: 1081686973}
+    - target: {fileID: 6571425236151717392, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
+      propertyPath: moveSpots.Array.data[3]
+      value: 
+      objectReference: {fileID: 825737544}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 7c80f9bb0da5f574092262058bc7e8ee, type: 3}
 --- !u!4 &931585178 stripped
@@ -922,6 +946,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2670634059860596213, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
+      propertyPath: moveSpots.Array.data[0]
+      value: 
+      objectReference: {fileID: 931585178}
+    - target: {fileID: 2670634059860596213, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
+      propertyPath: moveSpots.Array.data[1]
+      value: 
+      objectReference: {fileID: 637530116}
+    - target: {fileID: 2670634059860596213, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
+      propertyPath: moveSpots.Array.data[2]
+      value: 
+      objectReference: {fileID: 1081686973}
+    - target: {fileID: 2670634059860596213, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
+      propertyPath: moveSpots.Array.data[3]
+      value: 
+      objectReference: {fileID: 825737544}
     - target: {fileID: 3391830067948076034, guid: afb15a93752386e43ababc57df8fbb7f, type: 3}
       propertyPath: m_Name
       value: EnemyCharacter
@@ -1032,7 +1072,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2966201143481919023, guid: ef6c397b481149b47a2c58fca4117456, type: 3}
       propertyPath: m_RootOrder
-      value: 19
+      value: 20
       objectReference: {fileID: 0}
     - target: {fileID: 2966201143481919023, guid: ef6c397b481149b47a2c58fca4117456, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1242,7 +1282,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2137163689615830085, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: movingRange
-      value: 0.0001
+      value: 0.001
       objectReference: {fileID: 0}
     - target: {fileID: 5434856550299697751, guid: da071c34e94cb7e42a369a03f65b5f6d, type: 3}
       propertyPath: powerPlayer
